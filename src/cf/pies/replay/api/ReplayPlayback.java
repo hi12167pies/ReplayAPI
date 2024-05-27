@@ -50,7 +50,11 @@ public class ReplayPlayback {
             EntityInfo info = replay.getEntityInfo().get(id);
 
             NPC npc = new NPC(info.getName(), UUID.randomUUID(), true, false, false);
+            npc.hideNametag();
             npc.addListener(listeners);
+
+            // set npc location before spawning
+            npc.setLocation(origin);
 
             npc.spawn();
 
