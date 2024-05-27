@@ -1,9 +1,6 @@
-package cf.pies.ReplayAPI.core;
+package cf.pies.replay;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BukkitMain extends JavaPlugin {
-    @Override
-    public void onEnable() {
-    }
 }
