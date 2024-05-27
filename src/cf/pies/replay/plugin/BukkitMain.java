@@ -1,4 +1,4 @@
-package cf.pies.replay;
+package cf.pies.replay.plugin;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

@@ -1,6 +1,5 @@
-package cf.pies.replay.api.recordable;
+package cf.pies.replay.api;
 
-import cf.pies.replay.api.Replay;
 import cf.pies.replay.api.recordable.impl.LocationRecordable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

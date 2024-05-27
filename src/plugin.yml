@@ -1,7 +1,7 @@
 name: ReplayAPI
 version: 1.0
 api-version: 1.8
-main: cf.pies.replay.BukkitMain
+main: cf.pies.replay.plugin.BukkitMain
 author: hi12167pies
 website: pies.cf
 description: Api for replays

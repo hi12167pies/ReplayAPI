@@ -56,7 +56,7 @@ public class Replay {
     /**
      * Starts recording the replay
      */
-    public void startRecording() {
+    public void start() {
         startTick = MinecraftServer.currentTick;
         recording = true;
     }
@@ -64,7 +64,7 @@ public class Replay {
     /**
      * Stops recording the replay
      */
-    public void endRecording() {
+    public void end() {
         length = getTick();
         recording = false;
     }

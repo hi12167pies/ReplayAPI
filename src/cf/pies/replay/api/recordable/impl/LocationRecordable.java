@@ -1,8 +1,10 @@
 package cf.pies.replay.api.recordable.impl;
 
 import cf.pies.replay.api.Replay;
+import cf.pies.replay.api.ReplayPlayback;
 import cf.pies.replay.api.recordable.EntityRecordable;
 import org.bukkit.Location;
+import top.speedcubing.lib.bukkit.entity.NPC;
 
 public class LocationRecordable implements EntityRecordable {
     private final int entityId;
@@ -26,6 +28,13 @@ public class LocationRecordable implements EntityRecordable {
     @Override
     public void onRecord(Replay replay) {
         // Shift location relative to origin
-        location = location.subtract(replay.getOrigin());
+        location = location.clone().subtract(replay.getOrigin());
+    }
+
+    @Override
+    public void play(ReplayPlayback playback) {
+        NPC npc = playback.getNPC(entityId);
+
+        npc.setLocation(location.clone().add(playback.getOrigin()));
     }
 }
