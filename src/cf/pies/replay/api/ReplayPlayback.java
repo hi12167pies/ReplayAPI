@@ -46,7 +46,12 @@ public class ReplayPlayback {
         return replay;
     }
 
-    public void start() {
+    /**
+     * Setups the replay npcs and other stuff
+     */
+    public void setup() {
+        currentTick = 0;
+
         for (Integer id : replay.getEntityInfo().keySet()) {
             EntityInfo info = replay.getEntityInfo().get(id);
 
@@ -61,28 +66,36 @@ public class ReplayPlayback {
 
             npcs.put(id, npc);
         }
+    }
 
-        currentTick = 0;
+    /**
+     * Starts playing the replay
+     */
+    public void play() {
         task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             if (currentTick >= replay.getLength()) {
                 this.end();
                 return;
             }
-            if (replay.getReplayData().containsKey(currentTick)) {
-                List<Recordable> data = replay.getReplayData().get(currentTick);
-                for (Recordable recordable : data) {
-                    recordable.play(this);
-                }
-            }
-            currentTick++;
+            nextTick();
         }, 0L, 1L);
     }
 
-    public void end() {
+    /**
+     * Pauses the replay at its current state
+     */
+    public void pause() {
         if (task != -1) {
             Bukkit.getScheduler().cancelTask(task);
             task = -1;
         }
+    }
+
+    /**
+     * Ends the replay completely
+     */
+    public void end() {
+        pause();
         for (NPC npc : npcs.values()) {
             npc.despawn();
             npc.delete();
@@ -90,7 +103,24 @@ public class ReplayPlayback {
         npcs.clear();
     }
 
-    public void message(String message) {
+    /**
+     * Plays one tick of the replay
+     */
+    public void nextTick() {
+        if (replay.getReplayData().containsKey(currentTick)) {
+            List<Recordable> data = replay.getReplayData().get(currentTick);
+            for (Recordable recordable : data) {
+                recordable.play(this);
+            }
+        }
+        currentTick++;
+    }
+
+    /**
+     * Sends a message to everyone listening to the replay, should only be used for testing
+     * @param message Message to send
+     */
+    public void messageListeners(String message) {
         for (Player listener : listeners) {
             listener.sendMessage(message);
         }
