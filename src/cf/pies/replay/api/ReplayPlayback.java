@@ -6,6 +6,7 @@ import cf.pies.replay.api.recordable.Recordable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.speedcubing.lib.bukkit.entity.NPC;
 
@@ -15,7 +16,7 @@ import java.util.*;
  * Use this class to replay a replay to a player
  */
 public class ReplayPlayback {
-    private final JavaPlugin plugin;
+    private final Plugin plugin;
     private final Replay replay;
     private final Location origin;
     private final HashMap<Integer, NPC> npcs = new HashMap<>();
@@ -23,7 +24,7 @@ public class ReplayPlayback {
     private int task = -1;
     private int currentTick = 0;
 
-    public ReplayPlayback(JavaPlugin plugin, Replay replay, Location origin) {
+    public ReplayPlayback(Plugin plugin, Replay replay, Location origin) {
         this.plugin = plugin;
         this.replay = replay;
         this.origin = origin;

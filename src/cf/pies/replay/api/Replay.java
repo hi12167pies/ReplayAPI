@@ -99,11 +99,33 @@ public class Replay {
         addEntity(player.getEntityId(), new EntityInfo(player.getName()));
     }
 
+    /**
+     * @param id The id of the entity
+     * @return If the entity is in the replay
+     */
     public boolean hasEntity(int id) {
         return entityInfo.containsKey(id);
     }
 
+    /**
+     * @param player The player to check
+     * @return If the replay is in the replay
+     */
     public boolean hasPlayer(Player player) {
         return hasEntity(player.getEntityId());
+    }
+
+    /**
+     * Adds the current instance to the default replay recorder
+     */
+    public void addRecording() {
+        ReplayAPI.getApi().addRecording(this);
+    }
+
+    /**
+     * Removes the current instance from the default replay recorder
+     */
+    public void removeRecording() {
+        ReplayAPI.getApi().removeRecording(this);
     }
 }
