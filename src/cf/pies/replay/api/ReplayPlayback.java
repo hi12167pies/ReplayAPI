@@ -59,14 +59,15 @@ public class ReplayPlayback {
 
         currentTick = 0;
         task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            if (currentTick == replay.getLength()) {
+            if (currentTick >= replay.getLength()) {
                 this.end();
                 return;
             }
-            if (!replay.getReplayData().containsKey(currentTick)) return;
-            List<Recordable> data = replay.getReplayData().get(currentTick);
-            for (Recordable recordable : data) {
-                recordable.play(this);
+            if (replay.getReplayData().containsKey(currentTick)) {
+                List<Recordable> data = replay.getReplayData().get(currentTick);
+                for (Recordable recordable : data) {
+                    recordable.play(this);
+                }
             }
             currentTick++;
         }, 0L, 1L);
@@ -82,5 +83,11 @@ public class ReplayPlayback {
             npc.delete();
         }
         npcs.clear();
+    }
+
+    public void message(String message) {
+        for (Player listener : listeners) {
+            listener.sendMessage(message);
+        }
     }
 }

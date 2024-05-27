@@ -36,5 +36,6 @@ public class LocationRecordable implements EntityRecordable {
         NPC npc = playback.getNPC(entityId);
 
         npc.setLocation(location.clone().add(playback.getOrigin()));
+        npc.updateNpcLocation();
     }
 }
