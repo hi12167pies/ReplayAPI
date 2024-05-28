@@ -26,7 +26,7 @@ public class ReplayLoader {
     /**
      * Loads into the replay object
      */
-    public void load(Replay replay) throws IOException, UnsupportedCodecException, UnknownRecordableTypeException {
+    public void load(Replay replay) throws IOException, UnsupportedCodecException, UnknownRecordableTypeException, IllegalAccessException, InstantiationException {
         int codecVersion = in.readVarInt();
 
         switch (codecVersion) {

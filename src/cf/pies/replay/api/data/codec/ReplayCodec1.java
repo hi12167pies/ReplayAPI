@@ -2,7 +2,6 @@ package cf.pies.replay.api.data.codec;
 
 import cf.pies.replay.api.Replay;
 import cf.pies.replay.api.data.ReplayCodec;
-import cf.pies.replay.api.data.ReplaySerializable;
 import cf.pies.replay.api.data.stream.ReplayInputStream;
 import cf.pies.replay.api.data.stream.ReplayOutputStream;
 import cf.pies.replay.api.entity.EntityInfo;
@@ -13,16 +12,23 @@ import cf.pies.replay.api.recordable.impl.LocationRecordable;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ReplayCodec1 implements ReplayCodec {
+    private final static HashMap<Integer, Class<? extends Recordable>> RECORDABLE_TYPES = new HashMap<>();
+
+    static {
+        RECORDABLE_TYPES.put(1, LocationRecordable.class);
+    }
+
     @Override
     public int getVersion() {
         return 1;
     }
 
     @Override
-    public void read(Replay replay, ReplayInputStream in) throws IOException, UnknownRecordableTypeException {
+    public void read(Replay replay, ReplayInputStream in) throws IOException, UnknownRecordableTypeException, IllegalAccessException, InstantiationException {
         replay.setLength(in.readVarInt());
 
         // entity info - read array length
@@ -46,15 +52,11 @@ public class ReplayCodec1 implements ReplayCodec {
             for (int j = 0; j < dataSize; j++) {
                 // read type
                 int recordableType = in.readVarInt();
-
-                Recordable recordable;
-                switch (recordableType) {
-                    case 1:
-                        recordable = new LocationRecordable();
-                        break;
-                    default:
-                        throw new UnknownRecordableTypeException(recordableType);
+                if (!RECORDABLE_TYPES.containsKey(recordableType)) {
+                    throw new UnknownRecordableTypeException(recordableType);
                 }
+
+                Recordable recordable = RECORDABLE_TYPES.get(recordableType).newInstance();
 
                 ((RecordableSerializable) recordable).read(in);
                 data.add(recordable);

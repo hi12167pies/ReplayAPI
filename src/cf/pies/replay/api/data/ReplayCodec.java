@@ -10,6 +10,6 @@ import java.io.IOException;
 
 public interface ReplayCodec {
     int getVersion();
-    void read(Replay replay, ReplayInputStream in) throws IOException, ReplayException;
+    void read(Replay replay, ReplayInputStream in) throws IOException, ReplayException, IllegalAccessException, InstantiationException;
     void write(Replay replay, ReplayOutputStream out) throws IOException;
 }
