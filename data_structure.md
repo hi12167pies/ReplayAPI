@@ -1,13 +1,18 @@
+# Data types
+
+- VarInt - Same as minecraft VarInt
+- String - Array of char prefixed with VarInt for length
+
 # Structure of replay file
 
 | Name          | Type                         | Notes               |
 |---------------|------------------------------|---------------------|
-| codec version | int                          |
-| entity info   | [entityInfo](#entity-info)[] | List of entity info |
+| Codec Version | VarInt                       |
+| Entity Info   | [EntityInfo[]](#entity-info) | List of entity info |
 
 # Entity Info
 
-| Name   | Type  | Notes               |
-|--------|-------|---------------------|
-| int    | id    |
-| string | name  |
+| Name      | Type   | Notes                                                         |
+|-----------|--------|---------------------------------------------------------------|
+| Entity Id | VarInt | This is any number, it is used for identifying entities later |
+| Name      | String |
