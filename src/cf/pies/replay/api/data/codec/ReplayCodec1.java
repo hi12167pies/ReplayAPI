@@ -75,7 +75,7 @@ public class ReplayCodec1 implements ReplayCodec {
         out.writeVarInt(replay.getEntityInfo().size());
         for (Integer id : replay.getEntityInfo().keySet()) {
             EntityInfo info = replay.getEntityInfo().get(id);
-            out.writeInt(id);
+            out.writeVarInt(id);
             info.write(out);
         }
 
