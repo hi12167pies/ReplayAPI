@@ -1,10 +1,13 @@
 package cf.pies.replay.api;
 
+import cf.pies.replay.api.recordable.impl.BlockRecordable;
 import cf.pies.replay.api.recordable.impl.LocationRecordable;
 import cf.pies.replay.api.recordable.impl.SneakRecordable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.plugin.Plugin;
@@ -71,6 +74,38 @@ public class ReplayAPI implements Listener {
             Player player = event.getPlayer();
             if (replay.hasPlayer(player)) {
                 replay.record(new SneakRecordable(player.getEntityId(), event.isSneaking()));
+            }
+        }
+    }
+
+    @EventHandler
+    public void placeEvent(BlockPlaceEvent event) {
+        for (Replay replay : recordingReplays) {
+            if (!replay.isRecording()) continue;
+            Player player = event.getPlayer();
+            if (replay.hasPlayer(player)) {
+                replay.record(new BlockRecordable(
+                        event.getBlock().getLocation(),
+                        event.getBlock().getType(),
+                        event.getBlock().getData(),
+                        false
+                ));
+            }
+        }
+    }
+
+    @EventHandler
+    public void breakEvent(BlockBreakEvent event) {
+        for (Replay replay : recordingReplays) {
+            if (!replay.isRecording()) continue;
+            Player player = event.getPlayer();
+            if (replay.hasPlayer(player)) {
+                replay.record(new BlockRecordable(
+                        event.getBlock().getLocation(),
+                        event.getBlock().getType(),
+                        event.getBlock().getData(),
+                        true
+                ));
             }
         }
     }

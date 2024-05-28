@@ -45,6 +45,13 @@ public class ReplayPlayback {
     }
 
     /**
+     * @return The players currently watching the playback
+     */
+    public Set<Player> getListeners() {
+        return listeners;
+    }
+
+    /**
      * @return The current tick the playback is at
      */
     public int getCurrentTick() {

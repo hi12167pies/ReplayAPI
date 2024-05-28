@@ -26,7 +26,6 @@ public class LocationRecordable implements EntityRecordable {
 
     @Override
     public void onRecord(Replay replay) {
-        // Shift location relative to origin
         location = location.clone().subtract(replay.getOrigin());
     }
 
