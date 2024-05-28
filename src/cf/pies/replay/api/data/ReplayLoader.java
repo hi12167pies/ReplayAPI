@@ -3,6 +3,7 @@ package cf.pies.replay.api.data;
 import cf.pies.replay.api.Replay;
 import cf.pies.replay.api.data.codec.ReplayCodec1;
 import cf.pies.replay.api.data.stream.ReplayInputStream;
+import cf.pies.replay.api.exception.UnknownRecordableTypeException;
 import cf.pies.replay.api.exception.UnsupportedCodecException;
 import org.bukkit.World;
 
@@ -25,7 +26,7 @@ public class ReplayLoader {
     /**
      * Loads into the replay object
      */
-    public void load(Replay replay) throws IOException, UnsupportedCodecException {
+    public void load(Replay replay) throws IOException, UnsupportedCodecException, UnknownRecordableTypeException {
         int codecVersion = in.readVarInt();
 
         switch (codecVersion) {

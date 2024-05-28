@@ -26,6 +26,7 @@
 | Name        | Type                        | Notes                                                        |
 |-------------|-----------------------------|--------------------------------------------------------------|
 | Tick number | VarInt                      |
+| Data size   | VarInt                      |
 | Data        | [Recordable[]](#recordable) |
 
 # Recordable
