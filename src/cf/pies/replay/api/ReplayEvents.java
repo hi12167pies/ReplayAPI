@@ -1,23 +1,23 @@
 package cf.pies.replay.api;
 
-import cf.pies.replay.api.recordable.impl.BlockRecordable;
-import cf.pies.replay.api.recordable.impl.LocationRecordable;
-import cf.pies.replay.api.recordable.impl.SneakRecordable;
-import cf.pies.replay.api.recordable.impl.SwingRecordable;
+import cf.pies.replay.api.recordable.impl.*;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayInArmAnimation;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Set;
 
@@ -108,6 +108,31 @@ public class ReplayEvents implements Listener {
                         event.getBlock().getData(),
                         true
                 ));
+            }
+        }
+    }
+
+    @EventHandler
+    public void switchItemEvent(PlayerItemHeldEvent event) {
+        for (Replay replay : recordingReplays) {
+            if (!replay.isRecording()) continue;
+            Player player = event.getPlayer();
+            if (replay.hasPlayer(player)) {
+                int slot = event.getNewSlot();
+                ItemStack itemStack = player.getInventory().getItem(slot);
+                if (itemStack == null) {
+                    replay.record(new ItemHeldRecordable(
+                            player.getEntityId(),
+                            Material.AIR,
+                            (byte) 0
+                    ));
+                } else {
+                    replay.record(new ItemHeldRecordable(
+                            player.getEntityId(),
+                            itemStack.getType(),
+                            itemStack.getData().getData()
+                    ));
+                }
             }
         }
     }
