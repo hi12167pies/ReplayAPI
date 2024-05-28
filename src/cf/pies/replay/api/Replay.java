@@ -109,6 +109,9 @@ public class Replay {
      * This also records all the current events of the player
      */
     public void addPlayer(Player player) {
+        // TODO PlayerAddRecordable?
+        if (entityInfo.containsKey(player.getEntityId())) return;
+
         // Add the player's entity
         addEntity(player.getEntityId(), new EntityInfo(player.getName(), Skin.from(player)));
 
@@ -119,6 +122,14 @@ public class Replay {
         if (player.getItemInHand() != null) {
             record(new ItemHeldRecordable(player.getEntityId(), player.getItemInHand().getType(),player.getItemInHand().getData().getData()));
         }
+    }
+
+    /**
+     * Removes a player from replay
+     */
+    public void removePlayer(Player player) {
+        // TODO PlayerRemoveRecordable?
+        entityInfo.remove(player.getEntityId());
     }
 
     /**
