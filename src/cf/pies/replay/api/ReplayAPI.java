@@ -1,10 +1,12 @@
 package cf.pies.replay.api;
 
 import cf.pies.replay.api.recordable.impl.LocationRecordable;
+import cf.pies.replay.api.recordable.impl.SneakRecordable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashSet;
@@ -58,6 +60,17 @@ public class ReplayAPI implements Listener {
             Player player = event.getPlayer();
             if (replay.hasPlayer(player)) {
                 replay.record(new LocationRecordable(player.getEntityId(), event.getTo()));
+            }
+        }
+    }
+
+    @EventHandler
+    public void sneakEvent(PlayerToggleSneakEvent event) {
+        for (Replay replay : recordingReplays) {
+            if (!replay.isRecording()) continue;
+            Player player = event.getPlayer();
+            if (replay.hasPlayer(player)) {
+                replay.record(new SneakRecordable(player.getEntityId(), event.isSneaking()));
             }
         }
     }

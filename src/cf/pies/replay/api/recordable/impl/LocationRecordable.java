@@ -7,15 +7,12 @@ import org.bukkit.Location;
 import top.speedcubing.lib.bukkit.entity.NPC;
 
 public class LocationRecordable implements EntityRecordable {
-    private int entityId;
+    private final int entityId;
     private Location location;
 
     public LocationRecordable(int entityId, Location location) {
         this.entityId = entityId;
         this.location = location;
-    }
-
-    public LocationRecordable() {
     }
 
     public Location getLocation() {
@@ -36,7 +33,6 @@ public class LocationRecordable implements EntityRecordable {
     @Override
     public void play(ReplayPlayback playback) {
         NPC npc = playback.getNPC(entityId);
-
         npc.setLocation(location.clone().add(playback.getOrigin()));
         npc.updateNpcLocation();
     }
