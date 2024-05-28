@@ -21,6 +21,9 @@ public class ReplayLoader {
         this(Files.newInputStream(file.toPath()));
     }
 
+    /**
+     * Loads into the replay object
+     */
     public void load(Replay replay) throws IOException, UnsupportedCodecException {
         int codecVersion = in.readVarInt();
 
