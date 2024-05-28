@@ -5,10 +5,11 @@
 
 # Structure of replay file
 
-| Name          | Type                         | Notes               |
-|---------------|------------------------------|---------------------|
-| Codec Version | VarInt                       |
-| Entity Info   | [EntityInfo[]](#entity-info) | List of entity info |
+| Name             | Type                         | Notes                   |
+|------------------|------------------------------|-------------------------|
+| Codec Version    | VarInt                       |
+| Entity Info Size | VarInt                       | Size of EntityInfo list |
+| Entity Info      | [EntityInfo[]](#entity-info) | List of entity info     |
 
 # Entity Info
 
