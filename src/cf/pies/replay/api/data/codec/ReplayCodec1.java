@@ -17,6 +17,11 @@ import java.util.List;
 
 public class ReplayCodec1 implements ReplayCodec {
     @Override
+    public int getVersion() {
+        return 1;
+    }
+
+    @Override
     public void read(Replay replay, ReplayInputStream in) throws IOException, UnknownRecordableTypeException {
         replay.setLength(in.readVarInt());
 

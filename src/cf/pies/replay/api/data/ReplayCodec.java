@@ -9,6 +9,7 @@ import cf.pies.replay.api.exception.UnknownRecordableTypeException;
 import java.io.IOException;
 
 public interface ReplayCodec {
+    int getVersion();
     void read(Replay replay, ReplayInputStream in) throws IOException, ReplayException;
     void write(Replay replay, ReplayOutputStream out) throws IOException;
 }

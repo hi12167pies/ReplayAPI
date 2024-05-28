@@ -28,10 +28,12 @@ public class ReplaySaver {
     public void save(OutputStream stream) throws IOException {
         ReplayOutputStream out = new ReplayOutputStream(stream);
 
-        // codec version
-        out.writeInt(1);
+        ReplayCodec codec = ReplayAPI.getApi().getCurrentCodec();
 
-        ReplayAPI.getApi().getCurrentCodec().write(replay, out);
+        // codec version
+        out.writeVarInt(codec.getVersion());
+
+        codec.write(replay, out);
 
         out.close();
     }
