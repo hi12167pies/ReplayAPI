@@ -7,34 +7,34 @@
 
 | Name             | Type                         | Notes                   |
 |------------------|------------------------------|-------------------------|
-| Codec Version    | VarInt                       |
+| Codec version    | VarInt                       |
 | Length           | VarInt                       |
-| Entity Info Size | VarInt                       | Size of EntityInfo list |
-| Entity Info      | [EntityInfo[]](#entity-info) | List of entity info     |
+| Entity info size | VarInt                       | Size of EntityInfo list |
+| Entity info      | [EntityInfo[]](#entity-info) | List of entity info     |
 | Tick data size   | VarInt                       |
 | Tick data        | [TickData[]](#tick-data)     |
 
-# Entity Info
+# Entity info
 
 | Name      | Type   | Notes                                                         |
 |-----------|--------|---------------------------------------------------------------|
-| Entity Id | VarInt | This is any number, it is used for identifying entities later |
+| Entity id | VarInt | This is any number, it is used for identifying entities later |
 | Name      | String |
 
-# Tick Data
+# Tick data
 
 | Name        | Type                        | Notes                                                        |
 |-------------|-----------------------------|--------------------------------------------------------------|
-| Tick Number | VarInt                      |
+| Tick number | VarInt                      |
 | Data        | [Recordable[]](#recordable) |
 
 # Recordable
 | Name            | Type                             | Notes                                 |
 |-----------------|----------------------------------|---------------------------------------|
-| Recordable Type | VarInt                           | [recordable types](#recordable-types) |
+| Recordable type | VarInt                           | [Recordable types](#recordable-types) |
 | Data            | any, depends on which recordable |                                       |
 
-# Recordable Types
+# Recordable types
 | Id | Recordable          |
 |----|---------------------|
 | 1  | Location Recordable |
