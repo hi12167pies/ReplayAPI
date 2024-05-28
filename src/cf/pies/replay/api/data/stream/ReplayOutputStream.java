@@ -1,5 +1,7 @@
 package cf.pies.replay.api.data.stream;
 
+import org.bukkit.Location;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -10,6 +12,10 @@ public class ReplayOutputStream extends DataOutputStream {
 
     public ReplayOutputStream(OutputStream out) {
         super(out);
+    }
+
+    public void writeByteChar(char c) throws IOException {
+        writeByte((byte) c);
     }
 
     public void writeVarInt(int value) throws IOException {
@@ -29,7 +35,15 @@ public class ReplayOutputStream extends DataOutputStream {
     public void writeString(String string) throws IOException {
         writeVarInt(string.length());
         for (int i = 0; i < string.length(); i++) {
-            writeChar(string.charAt(i));
+            writeByteChar(string.charAt(i));
         }
+    }
+
+    public void writeLocation(Location location) throws IOException {
+        writeDouble(location.getX());
+        writeDouble(location.getY());
+        writeDouble(location.getZ());
+        writeFloat(location.getYaw());
+        writeFloat(location.getPitch());
     }
 }

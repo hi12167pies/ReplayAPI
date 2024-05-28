@@ -1,13 +1,11 @@
 package cf.pies.replay.api;
 
 import cf.pies.replay.api.entity.EntityInfo;
-import cf.pies.replay.api.recordable.EntityRecordable;
 import cf.pies.replay.api.recordable.Recordable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 import top.speedcubing.lib.bukkit.entity.NPC;
 
 import java.util.*;
@@ -44,6 +42,13 @@ public class ReplayPlayback {
 
     public Replay getReplay() {
         return replay;
+    }
+
+    /**
+     * @return The current tick the playback is at
+     */
+    public int getCurrentTick() {
+        return currentTick;
     }
 
     /**

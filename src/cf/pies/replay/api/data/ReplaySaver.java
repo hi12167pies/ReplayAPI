@@ -32,5 +32,7 @@ public class ReplaySaver {
         out.writeInt(1);
 
         ReplayAPI.getApi().getCurrentCodec().write(replay, out);
+
+        out.close();
     }
 }

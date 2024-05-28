@@ -47,6 +47,13 @@ public class Replay {
     }
 
     /**
+     * Sets the length of the replay. **This should only be used for loading replays**
+     */
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    /**
      * @return The current tick of the replay
      */
     public int getTick() {

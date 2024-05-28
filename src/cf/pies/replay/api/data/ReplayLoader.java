@@ -4,6 +4,7 @@ import cf.pies.replay.api.Replay;
 import cf.pies.replay.api.data.codec.ReplayCodec1;
 import cf.pies.replay.api.data.stream.ReplayInputStream;
 import cf.pies.replay.api.exception.UnsupportedCodecException;
+import org.bukkit.World;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,12 +14,12 @@ import java.nio.file.Files;
 public class ReplayLoader {
     private final ReplayInputStream in;
 
-    public ReplayLoader(InputStream stream) {
-        in = new ReplayInputStream(stream);
+    public ReplayLoader(InputStream stream, World world) {
+        in = new ReplayInputStream(stream, world);
     }
 
-    public ReplayLoader(File file) throws IOException {
-        this(Files.newInputStream(file.toPath()));
+    public ReplayLoader(File file, World world) throws IOException {
+        this(Files.newInputStream(file.toPath()), world);
     }
 
     /**
@@ -34,5 +35,7 @@ public class ReplayLoader {
             default:
                 throw new UnsupportedCodecException(codecVersion);
         }
+
+        in.close();
     }
 }
