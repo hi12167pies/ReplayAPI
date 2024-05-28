@@ -30,9 +30,9 @@ public class BlockRecordable implements Recordable {
     public void play(ReplayPlayback playback) {
         for (Player player : playback.getListeners()) {
             if (isBroken) {
-                NMS.updateBlock(player, location, Material.AIR, (byte) 0);
+                NMS.updateBlock(player, location.clone().add(playback.getOrigin()), Material.AIR, (byte) 0);
             } else {
-                NMS.updateBlock(player, location, material, data);
+                NMS.updateBlock(player, location.clone().add(playback.getOrigin()), material, data);
             }
         }
     }

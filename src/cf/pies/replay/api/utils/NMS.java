@@ -1,11 +1,9 @@
 package cf.pies.replay.api.utils;
 
-import net.minecraft.server.v1_8_R3.Block;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.IBlockData;
-import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
@@ -29,10 +27,9 @@ public class NMS {
     }
 
     public static void updateBlock(Player player, Location location, Material material, byte data) {
-        player.sendBlockChange(location, material, data);
-//        World world = ((CraftWorld) player.getWorld()).getHandle();
-//        PacketPlayOutBlockChange packet = new PacketPlayOutBlockChange(world, toNMS(location));
-//        packet.block = data;
-//        sendPacket(player, packet);
+        World world = ((CraftWorld) player.getWorld()).getHandle();
+        PacketPlayOutBlockChange packet = new PacketPlayOutBlockChange(world, toNMS(location));
+        packet.block = getIBlockData(material, data);
+        sendPacket(player, packet);
     }
 }

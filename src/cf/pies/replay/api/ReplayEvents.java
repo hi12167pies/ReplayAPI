@@ -1,0 +1,114 @@
+package cf.pies.replay.api;
+
+import cf.pies.replay.api.recordable.impl.BlockRecordable;
+import cf.pies.replay.api.recordable.impl.LocationRecordable;
+import cf.pies.replay.api.recordable.impl.SneakRecordable;
+import cf.pies.replay.api.recordable.impl.SwingRecordable;
+import io.netty.channel.ChannelDuplexHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPipeline;
+import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketPlayInArmAnimation;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
+
+import java.util.Set;
+
+public class ReplayEvents implements Listener {
+    private final Set<Replay> recordingReplays = ReplayAPI.getApi().getRecordingReplays();
+
+    @EventHandler
+    public void joinEvent(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+
+        ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().playerConnection.networkManager.channel.pipeline();
+
+        // don't inject again on reload
+        if (pipeline.get("ReplayAPI-Decoder") != null) return;
+
+        pipeline.addAfter("decoder", "ReplayAPI-Decoder", new ChannelDuplexHandler() {
+            @Override
+            public void channelRead(ChannelHandlerContext ctx, Object message) throws Exception {
+                if (message instanceof Packet) {
+                    // note: return to cancel packet
+                    onPacket(player, (Packet<?>) message);
+                }
+                super.channelRead(ctx, message);
+            }
+        });
+    }
+
+    public void onPacket(Player player, Packet<?> packet) {
+        if (packet instanceof PacketPlayInArmAnimation) {
+
+            for (Replay replay : recordingReplays) {
+                if (!replay.isRecording()) continue;
+                if (replay.hasPlayer(player)) {
+                    replay.record(new SwingRecordable(player.getEntityId()));
+                }
+            }
+
+        }
+    }
+
+    @EventHandler
+    public void moveEvent(PlayerMoveEvent event) {
+        for (Replay replay : recordingReplays) {
+            if (!replay.isRecording()) continue;
+            Player player = event.getPlayer();
+            if (replay.hasPlayer(player)) {
+                replay.record(new LocationRecordable(player.getEntityId(), event.getTo()));
+            }
+        }
+    }
+
+    @EventHandler
+    public void sneakEvent(PlayerToggleSneakEvent event) {
+        for (Replay replay : recordingReplays) {
+            if (!replay.isRecording()) continue;
+            Player player = event.getPlayer();
+            if (replay.hasPlayer(player)) {
+                replay.record(new SneakRecordable(player.getEntityId(), event.isSneaking()));
+            }
+        }
+    }
+
+    @EventHandler
+    public void placeEvent(BlockPlaceEvent event) {
+        for (Replay replay : recordingReplays) {
+            if (!replay.isRecording()) continue;
+            Player player = event.getPlayer();
+            if (replay.hasPlayer(player)) {
+                replay.record(new BlockRecordable(
+                        event.getBlock().getLocation(),
+                        event.getBlock().getType(),
+                        event.getBlock().getData(),
+                        false
+                ));
+            }
+        }
+    }
+
+    @EventHandler
+    public void breakEvent(BlockBreakEvent event) {
+        for (Replay replay : recordingReplays) {
+            if (!replay.isRecording()) continue;
+            Player player = event.getPlayer();
+            if (replay.hasPlayer(player)) {
+                replay.record(new BlockRecordable(
+                        event.getBlock().getLocation(),
+                        event.getBlock().getType(),
+                        event.getBlock().getData(),
+                        true
+                ));
+            }
+        }
+    }
+}
