@@ -1,8 +1,8 @@
 package cf.pies.replay.api.data;
 
 import cf.pies.replay.api.Replay;
+import cf.pies.replay.api.ReplayAPI;
 import cf.pies.replay.api.data.stream.ReplayOutputStream;
-import cf.pies.replay.api.entity.EntityInfo;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,24 +15,22 @@ public class ReplaySaver {
         this.replay = replay;
     }
 
+    /**
+     * Saves the replay to a file
+     */
     public void save(File file) throws IOException {
         save(Files.newOutputStream(file.toPath()));
     }
 
+    /**
+     * Saves the replay to the stream
+     */
     public void save(OutputStream stream) throws IOException {
         ReplayOutputStream out = new ReplayOutputStream(stream);
 
         // codec version
         out.writeInt(1);
 
-        for (Integer id : replay.getEntityInfo().keySet()) {
-            EntityInfo info = replay.getEntityInfo().get(id);
-
-            // write id
-            out.writeInt(id);
-
-            // write info
-            info.write(out);
-        }
+        ReplayAPI.getApi().getCurrentCodec().write(replay, out);
     }
 }

@@ -1,5 +1,7 @@
 package cf.pies.replay.api;
 
+import cf.pies.replay.api.data.ReplayCodec;
+import cf.pies.replay.api.data.codec.ReplayCodec1;
 import cf.pies.replay.api.recordable.impl.LocationRecordable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,13 +14,19 @@ import java.util.Set;
 
 public class ReplayAPI implements Listener {
     private static final ReplayAPI api = new ReplayAPI();
-
     public static ReplayAPI getApi() {
         return api;
     }
 
+    // --- instance ---
+
     private Plugin plugin = null;
+    private final ReplayCodec currentCodec = new ReplayCodec1();
     private final Set<Replay> recordingReplays = new HashSet<>();
+
+    public ReplayCodec getCurrentCodec() {
+        return currentCodec;
+    }
 
     /**
      * Sets the plugin for the api
