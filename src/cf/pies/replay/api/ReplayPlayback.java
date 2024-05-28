@@ -1,6 +1,7 @@
 package cf.pies.replay.api;
 
 import cf.pies.replay.api.entity.EntityInfo;
+import cf.pies.replay.api.entity.Skin;
 import cf.pies.replay.api.recordable.Recordable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -70,6 +71,11 @@ public class ReplayPlayback {
             NPC npc = new NPC(info.getName(), UUID.randomUUID(), true, false, false);
             npc.hideNametag();
             npc.addListener(listeners);
+
+            if (info.hasSkin()) {
+                Skin skin = info.getSkin();
+                npc.setSkin(skin.getValue(), skin.getSignature());
+            }
 
             // set npc location before spawning
             npc.setLocation(origin);

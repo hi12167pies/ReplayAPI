@@ -1,7 +1,11 @@
 package cf.pies.replay.api;
 
 import cf.pies.replay.api.entity.EntityInfo;
+import cf.pies.replay.api.entity.Skin;
 import cf.pies.replay.api.recordable.Recordable;
+import cf.pies.replay.api.recordable.impl.ItemHeldRecordable;
+import cf.pies.replay.api.recordable.impl.LocationRecordable;
+import cf.pies.replay.api.recordable.impl.SneakRecordable;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -12,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Replay {
-    private int startTick;
+    private int startTick = -1;
     private int length;
     private boolean recording = false;
     private final Location origin;
@@ -57,6 +61,7 @@ public class Replay {
      * @return The current tick of the replay
      */
     public int getTick() {
+        if (startTick == -1) return 0;
         return MinecraftServer.currentTick - startTick;
     }
 
@@ -101,9 +106,19 @@ public class Replay {
 
     /**
      * Adds a player to the replay
+     * This also records all the current events of the player
      */
     public void addPlayer(Player player) {
-        addEntity(player.getEntityId(), new EntityInfo(player.getName()));
+        // Add the player's entity
+        addEntity(player.getEntityId(), new EntityInfo(player.getName(), Skin.from(player)));
+
+        // Record the current events of the player
+        record(new LocationRecordable(player.getEntityId(), player.getLocation()));
+        record(new SneakRecordable(player.getEntityId(), player.isSneaking()));
+
+        if (player.getItemInHand() != null) {
+            record(new ItemHeldRecordable(player.getEntityId(), player.getItemInHand().getType(),player.getItemInHand().getData().getData()));
+        }
     }
 
     /**
