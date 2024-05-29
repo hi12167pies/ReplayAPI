@@ -1,4 +1,4 @@
-package cf.pies.replay.api.recordable.impl;
+package cf.pies.replay.api.recordable.player;
 
 import cf.pies.replay.api.Replay;
 import cf.pies.replay.api.ReplayPlayback;

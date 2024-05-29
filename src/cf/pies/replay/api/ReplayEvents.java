@@ -1,6 +1,7 @@
 package cf.pies.replay.api;
 
-import cf.pies.replay.api.recordable.impl.*;
+import cf.pies.replay.api.recordable.player.*;
+import cf.pies.replay.api.recordable.world.BlockRecordable;
 import cf.pies.replay.api.utils.NMS;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,7 +9,6 @@ import io.netty.channel.ChannelPipeline;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayInArmAnimation;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
