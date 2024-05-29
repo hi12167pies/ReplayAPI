@@ -123,7 +123,6 @@ public class Replay {
      * This also records all the current events of the player
      */
     public void addPlayer(Player player) {
-        // TODO PlayerAddRecordable?
         if (entityInfo.containsKey(player.getEntityId())) return;
 
         // Add the player's entity
