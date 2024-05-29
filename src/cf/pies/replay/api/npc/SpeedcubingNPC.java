@@ -2,6 +2,7 @@ package cf.pies.replay.api.npc;
 
 import cf.pies.replay.api.entity.ReplaySkin;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.util.CraftMagicNumbers;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import top.speedcubing.lib.bukkit.entity.NPC;
@@ -59,6 +60,18 @@ public class SpeedcubingNPC implements ReplayNPC {
     public void setLocation(Location location) {
         npc.setLocation(location);
         npc.updateNpcLocation();
+    }
+
+    @Override
+    public Location getLocation() {
+        return new Location(
+                npc.entityPlayer.world.getWorld(),
+                npc.entityPlayer.locX,
+                npc.entityPlayer.locY,
+                npc.entityPlayer.locZ,
+                npc.entityPlayer.yaw,
+                npc.entityPlayer.pitch
+        );
     }
 
     @Override

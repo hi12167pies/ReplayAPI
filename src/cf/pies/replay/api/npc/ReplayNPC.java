@@ -52,6 +52,11 @@ public interface ReplayNPC {
     void setLocation(Location location);
 
     /**
+     * @return The npc location
+     */
+    Location getLocation();
+
+    /**
      * Sets the item in the npc hand
      */
     void setHolding(ItemStack stack);
