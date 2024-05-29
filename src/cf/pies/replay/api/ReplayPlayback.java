@@ -37,6 +37,13 @@ public class ReplayPlayback {
         return npcs.getOrDefault(id, null);
     }
 
+    public void removeNPC(int id) {
+        NPC npc = npcs.get(id);
+        npc.despawn();
+        npc.delete();
+        npcs.remove(id);
+    }
+
     public Location getOrigin() {
         return origin;
     }
@@ -114,11 +121,9 @@ public class ReplayPlayback {
      */
     public void end() {
         pause();
-        for (NPC npc : npcs.values()) {
-            npc.despawn();
-            npc.delete();
+        for (int id : npcs.keySet()) {
+            removeNPC(id);
         }
-        npcs.clear();
     }
 
     /**

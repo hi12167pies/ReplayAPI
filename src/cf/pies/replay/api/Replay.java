@@ -3,9 +3,7 @@ package cf.pies.replay.api;
 import cf.pies.replay.api.entity.EntityInfo;
 import cf.pies.replay.api.entity.Skin;
 import cf.pies.replay.api.recordable.Recordable;
-import cf.pies.replay.api.recordable.entity.ItemHeldRecordable;
-import cf.pies.replay.api.recordable.entity.LocationRecordable;
-import cf.pies.replay.api.recordable.entity.SneakRecordable;
+import cf.pies.replay.api.recordable.entity.*;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -101,7 +99,22 @@ public class Replay {
      */
     public void addEntity(int id, EntityInfo info) {
         if (entityInfo.containsKey(id)) return;
-        entityInfo.put(id, info);
+        if (isRecording()) {
+            record(new EntityAddRecordable(id, info));
+        } else {
+            entityInfo.put(id, info);
+        }
+    }
+
+    /**
+     * Removes an entity from replay
+     */
+    public void removeEntity(int id) {
+        if (isRecording()) {
+            record(new EntityRemoveRecordable(id));
+        } else {
+            entityInfo.remove(id);
+        }
     }
 
     /**
@@ -122,14 +135,6 @@ public class Replay {
         if (player.getItemInHand() != null) {
             record(new ItemHeldRecordable(player.getEntityId(), player.getItemInHand().getType(),player.getItemInHand().getData().getData()));
         }
-    }
-
-    /**
-     * Removes a player from replay
-     */
-    public void removePlayer(Player player) {
-        // TODO PlayerRemoveRecordable?
-        entityInfo.remove(player.getEntityId());
     }
 
     /**
