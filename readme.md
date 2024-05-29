@@ -15,7 +15,7 @@ replay.end();
 ```
 
 ```java
-ReplayPlayback playback = new ReplayPlayback(plugin, replay, origin,);
+ReplayPlayback playback = new ReplayPlayback(plugin, replay, origin);
 
 playback.addListener(player);
 
