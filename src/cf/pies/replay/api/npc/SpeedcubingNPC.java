@@ -25,6 +25,11 @@ public class SpeedcubingNPC implements ReplayNPC {
     }
 
     @Override
+    public void spawn() {
+        npc.spawn();
+    }
+
+    @Override
     public void setSkin(ReplaySkin skin) {
         npc.setSkin(skin.getValue(), skin.getSignature());
     }
@@ -53,6 +58,7 @@ public class SpeedcubingNPC implements ReplayNPC {
     @Override
     public void setLocation(Location location) {
         npc.setLocation(location);
+        npc.updateNpcLocation();
     }
 
     @Override

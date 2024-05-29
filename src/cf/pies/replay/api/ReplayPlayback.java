@@ -55,6 +55,7 @@ public class ReplayPlayback {
      */
     public void spawnNpc(int entityId, EntityInfo info) {
         ReplayNPC npc = new SpeedcubingNPC(info.getName());
+
         for (Player listener : listeners) {
             npc.addListener(listener);
         }
@@ -62,6 +63,9 @@ public class ReplayPlayback {
         if (info.hasSkin()) {
             npc.setSkin(info.getSkin());
         }
+
+        npc.setLocation(origin);
+        npc.spawn();
 
         npcs.put(entityId, npc);
     }

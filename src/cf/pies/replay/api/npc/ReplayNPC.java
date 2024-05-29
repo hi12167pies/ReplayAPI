@@ -16,6 +16,10 @@ public interface ReplayNPC {
      */
     void removeListener(Player player);
 
+    /**
+     * Spawns the npc, called after listeners are added
+     */
+    void spawn();
 
     /**
      * Sets the skin of the npc
