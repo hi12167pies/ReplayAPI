@@ -20,6 +20,13 @@ public class NMS {
         return ((CraftPlayer) player).getHandle();
     }
 
+    public static void sendParticle(Player player, EnumParticle type, float x, float y, float z, float offsetX, float offsetY, float offsetZ, float speed, int count) {
+        EntityPlayer entityPlayer = getHandle(player);
+        PlayerConnection playerConnection = entityPlayer.playerConnection;
+        PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(type, true, x, y, z, offsetX, offsetY, offsetZ, speed, count);
+        playerConnection.sendPacket(packet);
+    }
+
     public static IBlockData getIBlockData(Material material, int data) {
         int combined;
         if (data == 0) {
