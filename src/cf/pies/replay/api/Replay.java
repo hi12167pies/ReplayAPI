@@ -8,16 +8,14 @@ import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Replay {
     private int startTick = -1;
     private int length;
     private boolean recording = false;
     private final Location origin;
+    private final Set<Integer> recordingEntities = new HashSet<>();
     private final Map<Integer, List<Recordable>> replayData = new HashMap<>();
     private final Map<Integer, EntityInfo> entityInfo = new HashMap<>();
 
@@ -70,6 +68,7 @@ public class Replay {
     public void start() {
         startTick = MinecraftServer.currentTick;
         recording = true;
+        recordingEntities.addAll(entityInfo.keySet());
     }
 
     /**
@@ -102,6 +101,7 @@ public class Replay {
         if (entityInfo.containsKey(id)) return;
         if (isRecording()) {
             record(new EntityAddRecordable(id, info));
+            recordingEntities.add(id);
         } else {
             entityInfo.put(id, info);
         }
@@ -113,9 +113,8 @@ public class Replay {
     public void removeEntity(int id) {
         if (isRecording()) {
             record(new EntityRemoveRecordable(id));
-        } else {
-            entityInfo.remove(id);
         }
+        recordingEntities.remove(id);
     }
 
     /**
@@ -138,6 +137,13 @@ public class Replay {
     }
 
     /**
+     * Removes the player from the recording
+     */
+    public void removePlayer(Player player) {
+        removeEntity(player.getEntityId());
+    }
+
+    /**
      * @param id The id of the entity
      * @return If the entity is in the replay
      */
@@ -152,6 +158,23 @@ public class Replay {
     public boolean hasPlayer(Player player) {
         return hasEntity(player.getEntityId());
     }
+
+    /**
+     * @param id The entity id to check
+     * @return If the entity id is being recorded
+     */
+    public boolean isRecordingEntity(int id) {
+        return recordingEntities.contains(id);
+    }
+
+    /**
+     * @param player The player to check
+     * @return If the player is being recorded
+     */
+    public boolean isRecordingPlayer(Player player) {
+        return isRecordingEntity(player.getEntityId());
+    }
+
 
     /**
      * Adds the current instance to the default replay recorder

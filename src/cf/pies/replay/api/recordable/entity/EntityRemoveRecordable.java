@@ -20,9 +20,9 @@ public class EntityRemoveRecordable implements Recordable {
 
     @Override
     public void play(ReplayPlayback playback) {
-        playback.getReplay().getEntityInfo().remove(entityId);
         if (playback.getNPC(entityId) != null) {
             playback.removeNPC(entityId);
         }
+        playback.getReplay().getEntityInfo().remove(entityId);
     }
 }

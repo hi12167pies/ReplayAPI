@@ -52,7 +52,7 @@ public class ReplayEvents implements Listener {
 
             for (Replay replay : recordingReplays) {
                 if (!replay.isRecording()) continue;
-                if (replay.hasPlayer(player)) {
+                if (replay.isRecordingPlayer(player)) {
                     replay.record(new SwingRecordable(player.getEntityId()));
                 }
             }
@@ -65,7 +65,7 @@ public class ReplayEvents implements Listener {
         for (Replay replay : recordingReplays) {
             if (!replay.isRecording()) continue;
             Player player = event.getPlayer();
-            if (replay.hasPlayer(player)) {
+            if (replay.isRecordingPlayer(player)) {
                 replay.record(new LocationRecordable(player.getEntityId(), event.getTo()));
             }
         }
@@ -76,7 +76,7 @@ public class ReplayEvents implements Listener {
         for (Replay replay : recordingReplays) {
             if (!replay.isRecording()) continue;
             Player player = event.getPlayer();
-            if (replay.hasPlayer(player)) {
+            if (replay.isRecordingPlayer(player)) {
                 replay.record(new SneakRecordable(player.getEntityId(), event.isSneaking()));
             }
         }
@@ -87,7 +87,7 @@ public class ReplayEvents implements Listener {
         for (Replay replay : recordingReplays) {
             if (!replay.isRecording()) continue;
             Player player = event.getPlayer();
-            if (replay.hasPlayer(player)) {
+            if (replay.isRecordingPlayer(player)) {
                 replay.record(new BlockRecordable(
                         event.getBlock().getLocation(),
                         event.getBlock().getType(),
@@ -103,7 +103,7 @@ public class ReplayEvents implements Listener {
         for (Replay replay : recordingReplays) {
             if (!replay.isRecording()) continue;
             Player player = event.getPlayer();
-            if (replay.hasPlayer(player)) {
+            if (replay.isRecordingPlayer(player)) {
                 replay.record(new BlockRecordable(
                         event.getBlock().getLocation(),
                         event.getBlock().getType(),
@@ -119,7 +119,7 @@ public class ReplayEvents implements Listener {
         for (Replay replay : recordingReplays) {
             if (!replay.isRecording()) continue;
             Player player = event.getPlayer();
-            if (replay.hasPlayer(player)) {
+            if (replay.isRecordingPlayer(player)) {
                 int slot = event.getNewSlot();
                 ItemStack itemStack = player.getInventory().getItem(slot);
                 if (itemStack == null) {
@@ -145,7 +145,7 @@ public class ReplayEvents implements Listener {
         Player player = (Player) event.getEntity();
         for (Replay replay : recordingReplays) {
             if (!replay.isRecording()) continue;
-            if (replay.hasPlayer(player)) {
+            if (replay.isRecordingPlayer(player)) {
                 replay.record(new DamageRecordable(player.getEntityId()));
             }
         }

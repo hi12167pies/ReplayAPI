@@ -22,7 +22,7 @@ public class EntityAddRecordable implements Recordable {
 
     @Override
     public void play(ReplayPlayback playback) {
-        playback.getReplay().getEntityInfo().put(entityId, info);
         playback.spawnNpc(entityId, info);
+        playback.getReplay().getEntityInfo().put(entityId, info);
     }
 }
