@@ -1,32 +1,30 @@
-package cf.pies.replay.api.recordable.player;
+package cf.pies.replay.api.recordable.entity;
 
 import cf.pies.replay.api.Replay;
 import cf.pies.replay.api.ReplayPlayback;
 import cf.pies.replay.api.recordable.Recordable;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.Location;
 import top.speedcubing.lib.bukkit.entity.NPC;
 
-public class ItemHeldRecordable implements Recordable {
+public class LocationRecordable implements Recordable {
     private final int entityId;
-    private final Material material;
-    private final byte data;
+    private Location location;
 
-    public ItemHeldRecordable(int entityId, Material material, byte data) {
+    public LocationRecordable(int entityId, Location location) {
         this.entityId = entityId;
-        this.material = material;
-        this.data = data;
+        this.location = location;
     }
 
     @Override
     public void onRecord(Replay replay) {
-
+        location = location.clone().subtract(replay.getOrigin());
     }
 
     @Override
     public void play(ReplayPlayback playback) {
         NPC npc = playback.getNPC(entityId);
         if (npc == null) return;
-        npc.setItemInHand(new ItemStack(material, 1, data));
+        npc.setLocation(location.clone().add(playback.getOrigin()));
+        npc.updateNpcLocation();
     }
 }

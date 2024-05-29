@@ -1,14 +1,14 @@
-package cf.pies.replay.api.recordable.player;
+package cf.pies.replay.api.recordable.entity;
 
 import cf.pies.replay.api.Replay;
 import cf.pies.replay.api.ReplayPlayback;
 import cf.pies.replay.api.recordable.Recordable;
 import top.speedcubing.lib.bukkit.entity.NPC;
 
-public class DamageRecordable implements Recordable {
+public class SwingRecordable implements Recordable {
     private final int entityId;
 
-    public DamageRecordable(int entityId) {
+    public SwingRecordable(int entityId) {
         this.entityId = entityId;
     }
 
@@ -21,6 +21,6 @@ public class DamageRecordable implements Recordable {
     public void play(ReplayPlayback playback) {
         NPC npc = playback.getNPC(entityId);
         if (npc == null) return;
-        npc.animation(1);
+        npc.animation(0);
     }
 }

@@ -1,6 +1,6 @@
 package cf.pies.replay.api;
 
-import cf.pies.replay.api.recordable.player.*;
+import cf.pies.replay.api.recordable.entity.*;
 import cf.pies.replay.api.recordable.world.BlockRecordable;
 import cf.pies.replay.api.utils.NMS;
 import io.netty.channel.ChannelDuplexHandler;
