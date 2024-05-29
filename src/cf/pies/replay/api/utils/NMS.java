@@ -13,7 +13,11 @@ public class NMS {
         return new BlockPosition(location.getX(), location.getY(), location.getZ());
     }
     public static void sendPacket(Player player, Packet<?> packet) {
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+        NMS.getHandle(player).playerConnection.sendPacket(packet);
+    }
+
+    public static EntityPlayer getHandle(Player player) {
+        return ((CraftPlayer) player).getHandle();
     }
 
     public static IBlockData getIBlockData(Material material, int data) {

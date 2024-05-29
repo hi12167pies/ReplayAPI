@@ -4,8 +4,11 @@ import cf.pies.replay.api.Replay;
 import cf.pies.replay.api.ReplayPlayback;
 import cf.pies.replay.api.recordable.Recordable;
 import cf.pies.replay.api.utils.NMS;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftWolf;
 import org.bukkit.entity.Player;
 
 public class BlockRecordable implements Recordable {

@@ -5,6 +5,7 @@ import cf.pies.replay.api.ReplayPlayback;
 import cf.pies.replay.api.recordable.Recordable;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import top.speedcubing.lib.bukkit.entity.NPC;
 
 public class ItemHeldRecordable implements Recordable {
     private final int entityId;
@@ -24,6 +25,8 @@ public class ItemHeldRecordable implements Recordable {
 
     @Override
     public void play(ReplayPlayback playback) {
-        playback.getNPC(entityId).setItemInHand(new ItemStack(material, 1, data));
+        NPC npc = playback.getNPC(entityId);
+        if (npc == null) return;
+        npc.setItemInHand(new ItemStack(material, 1, data));
     }
 }

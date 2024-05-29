@@ -22,6 +22,7 @@ public class SneakRecordable implements Recordable {
     @Override
     public void play(ReplayPlayback playback) {
         NPC npc = playback.getNPC(entityId);
+        if (npc == null) return;
         npc.setSneaking(isSneaking);
     }
 }

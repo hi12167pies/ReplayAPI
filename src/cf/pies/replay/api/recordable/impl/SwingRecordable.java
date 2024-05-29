@@ -3,6 +3,7 @@ package cf.pies.replay.api.recordable.impl;
 import cf.pies.replay.api.Replay;
 import cf.pies.replay.api.ReplayPlayback;
 import cf.pies.replay.api.recordable.Recordable;
+import top.speedcubing.lib.bukkit.entity.NPC;
 
 public class SwingRecordable implements Recordable {
     private final int entityId;
@@ -18,6 +19,8 @@ public class SwingRecordable implements Recordable {
 
     @Override
     public void play(ReplayPlayback playback) {
-        playback.getNPC(entityId).animation(0);
+        NPC npc = playback.getNPC(entityId);
+        if (npc == null) return;
+        npc.animation(0);
     }
 }

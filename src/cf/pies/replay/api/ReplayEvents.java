@@ -1,6 +1,7 @@
 package cf.pies.replay.api;
 
 import cf.pies.replay.api.recordable.impl.*;
+import cf.pies.replay.api.utils.NMS;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
@@ -13,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -28,7 +30,7 @@ public class ReplayEvents implements Listener {
     public void joinEvent(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().playerConnection.networkManager.channel.pipeline();
+        ChannelPipeline pipeline = NMS.getHandle(player).playerConnection.networkManager.channel.pipeline();
 
         // don't inject again on reload
         if (pipeline.get("ReplayAPI-Decoder") != null) return;
@@ -133,6 +135,18 @@ public class ReplayEvents implements Listener {
                             itemStack.getData().getData()
                     ));
                 }
+            }
+        }
+    }
+
+    @EventHandler
+    public void damageEvent(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player)) return;
+        Player player = (Player) event.getEntity();
+        for (Replay replay : recordingReplays) {
+            if (!replay.isRecording()) continue;
+            if (replay.hasPlayer(player)) {
+                replay.record(new DamageRecordable(player.getEntityId()));
             }
         }
     }
