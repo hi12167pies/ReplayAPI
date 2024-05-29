@@ -8,9 +8,9 @@ replay.addPlayer(player);
 // by default the replays do not record them self,
 // this will add it to a list and use bukkit events to record
 replay.addRecording();
-
 replay.start();
 
+replay.removeRecording();
 replay.end();
 ```
 
