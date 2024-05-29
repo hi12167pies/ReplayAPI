@@ -57,9 +57,17 @@
         </dependency>
 
         <dependency>
-            <groupId>com.quadflame</groupId>
-            <artifactId>NpcApi</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>top.speedcubing</groupId>
+            <artifactId>speedcubingLib</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>E:/Jars/speedcubingLib.jar</systemPath>
         </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>com.quadflame</groupId>-->
+<!--            <artifactId>NpcApi</artifactId>-->
+<!--            <version>1.0.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
     </dependencies>
 </project>

@@ -2,13 +2,13 @@ package cf.pies.replay.api.entity;
 
 public class EntityInfo {
     private final String name;
-    private Skin skin = null;
+    private ReplaySkin skin = null;
 
     public EntityInfo(String name) {
         this.name = name;
     }
 
-    public EntityInfo(String name, Skin skin) {
+    public EntityInfo(String name, ReplaySkin skin) {
         this.name = name;
         this.skin = skin;
     }
@@ -17,7 +17,7 @@ public class EntityInfo {
         return name;
     }
 
-    public Skin getSkin() {
+    public ReplaySkin getSkin() {
         return skin;
     }
 

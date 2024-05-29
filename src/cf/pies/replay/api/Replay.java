@@ -1,7 +1,7 @@
 package cf.pies.replay.api;
 
 import cf.pies.replay.api.entity.EntityInfo;
-import cf.pies.replay.api.entity.Skin;
+import cf.pies.replay.api.entity.ReplaySkin;
 import cf.pies.replay.api.recordable.Recordable;
 import cf.pies.replay.api.recordable.entity.*;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
@@ -49,7 +49,8 @@ public class Replay {
     }
 
     /**
-     * Sets the length of the replay. **This should only be used for loading replays**
+     * Sets the length of the replay.
+     * <strong>This should only be used for loading replays</strong>
      */
     public void setLength(int length) {
         this.length = length;
@@ -126,7 +127,7 @@ public class Replay {
         if (entityInfo.containsKey(player.getEntityId())) return;
 
         // Add the player's entity
-        addEntity(player.getEntityId(), new EntityInfo(player.getName(), Skin.from(player)));
+        addEntity(player.getEntityId(), new EntityInfo(player.getName(), ReplaySkin.from(player)));
 
         // Record the current events of the player
         record(new LocationRecordable(player.getEntityId(), player.getLocation()));

@@ -2,8 +2,8 @@ package cf.pies.replay.api.recordable.entity;
 
 import cf.pies.replay.api.Replay;
 import cf.pies.replay.api.ReplayPlayback;
+import cf.pies.replay.api.npc.ReplayNPC;
 import cf.pies.replay.api.recordable.Recordable;
-import top.speedcubing.lib.bukkit.entity.NPC;
 
 public class SneakRecordable implements Recordable {
     private final int entityId;
@@ -21,7 +21,7 @@ public class SneakRecordable implements Recordable {
 
     @Override
     public void play(ReplayPlayback playback) {
-        NPC npc = playback.getNPC(entityId);
+        ReplayNPC npc = playback.getNPC(entityId);
         if (npc == null) return;
         npc.setSneaking(isSneaking);
     }

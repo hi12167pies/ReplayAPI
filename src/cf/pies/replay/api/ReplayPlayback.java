@@ -1,15 +1,18 @@
 package cf.pies.replay.api;
 
 import cf.pies.replay.api.entity.EntityInfo;
-import cf.pies.replay.api.entity.Skin;
+import cf.pies.replay.api.npc.ReplayNPC;
+import cf.pies.replay.api.npc.SpeedcubingNPC;
 import cf.pies.replay.api.recordable.Recordable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import top.speedcubing.lib.bukkit.entity.NPC;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Use this class to replay a replay to a player
@@ -18,7 +21,7 @@ public class ReplayPlayback {
     private final Plugin plugin;
     private final Replay replay;
     private final Location origin;
-    private final HashMap<Integer, NPC> npcs = new HashMap<>();
+    private final HashMap<Integer, ReplayNPC> npcs = new HashMap<>();
     private final Set<Player> listeners = new HashSet<>();
     private int task = -1;
     private int currentTick = 0;
@@ -33,15 +36,8 @@ public class ReplayPlayback {
         listeners.add(player);
     }
 
-    public NPC getNPC(int id) {
+    public ReplayNPC getNPC(int id) {
         return npcs.getOrDefault(id, null);
-    }
-
-    public void removeNPC(int id) {
-        NPC npc = npcs.get(id);
-        npc.despawn();
-        npc.delete();
-        npcs.remove(id);
     }
 
     public Location getOrigin() {
@@ -50,6 +46,34 @@ public class ReplayPlayback {
 
     public Replay getReplay() {
         return replay;
+    }
+
+    /**
+     * Spawns a npc in the replay playback
+     * @param entityId Entity id of the new npc
+     * @param info The info of the npc
+     */
+    public void spawnNpc(int entityId, EntityInfo info) {
+        ReplayNPC npc = new SpeedcubingNPC(info.getName());
+        for (Player listener : listeners) {
+            npc.addListener(listener);
+        }
+
+        if (info.hasSkin()) {
+            npc.setSkin(info.getSkin());
+        }
+
+        npcs.put(entityId, npc);
+    }
+
+    /**
+     * Removes a npc in the playback
+     * @param id The entity id of the npc
+     */
+    public void removeNPC(int id) {
+        ReplayNPC npc = npcs.get(id);
+        npc.remove();
+        npcs.remove(id);
     }
 
     /**
@@ -74,22 +98,7 @@ public class ReplayPlayback {
 
         for (Integer id : replay.getEntityInfo().keySet()) {
             EntityInfo info = replay.getEntityInfo().get(id);
-
-            NPC npc = new NPC(info.getName(), UUID.randomUUID(), true, false, false);
-            npc.hideNametag();
-            npc.addListener(listeners);
-
-            if (info.hasSkin()) {
-                Skin skin = info.getSkin();
-                npc.setSkin(skin.getValue(), skin.getSignature());
-            }
-
-            // set npc location before spawning
-            npc.setLocation(origin);
-
-            npc.spawn();
-
-            npcs.put(id, npc);
+            spawnNpc(id, info);
         }
     }
 
