@@ -50,6 +50,10 @@ public class ReplayPlayback {
         return replay;
     }
 
+    public PlaybackState getState() {
+        return state;
+    }
+
     /**
      * Spawns a npc in the replay playback
      * @param entityId Entity id of the new npc

@@ -10,9 +10,11 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <build>
         <sourceDirectory>src</sourceDirectory>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -22,6 +24,7 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -37,6 +40,25 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <source>src</source>
+                    <doclint>none</doclint> <!-- Disable doclint to avoid strict checks -->
+                    <encoding>UTF-8</encoding>
+                    <show>private</show> <!-- Show private methods and fields in Javadoc -->
+                </configuration>
             </plugin>
         </plugins>
         <resources>
@@ -63,11 +85,5 @@
             <version>1.0</version>
             <systemPath>E:/Jars/speedcubingLib.jar</systemPath>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>com.quadflame</groupId>-->
-<!--            <artifactId>NpcApi</artifactId>-->
-<!--            <version>1.0.0-SNAPSHOT</version>-->
-<!--        </dependency>-->
     </dependencies>
 </project>
