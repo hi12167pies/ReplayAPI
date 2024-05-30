@@ -1,6 +1,7 @@
 package cf.pies.replay.api;
 
 import cf.pies.replay.api.entity.EntityInfo;
+import cf.pies.replay.api.enums.PlaybackState;
 import cf.pies.replay.api.npc.ReplayNPC;
 import cf.pies.replay.api.npc.SpeedcubingNPC;
 import cf.pies.replay.api.recordable.Recordable;
@@ -25,6 +26,7 @@ public class ReplayPlayback {
     private final Set<Player> listeners = new HashSet<>();
     private int task = -1;
     private int currentTick = 0;
+    private PlaybackState state = PlaybackState.NONE;
 
     public ReplayPlayback(Plugin plugin, Replay replay, Location origin) {
         this.plugin = plugin;
@@ -117,6 +119,7 @@ public class ReplayPlayback {
             }
             nextTick();
         }, 0L, 1L);
+        state = PlaybackState.PLAYING;
     }
 
     /**
@@ -127,6 +130,7 @@ public class ReplayPlayback {
             Bukkit.getScheduler().cancelTask(task);
             task = -1;
         }
+        state = PlaybackState.PAUSED;
     }
 
     /**
@@ -137,6 +141,7 @@ public class ReplayPlayback {
         for (int id : npcs.keySet()) {
             removeNPC(id);
         }
+        state = PlaybackState.ENDED;
     }
 
     /**
