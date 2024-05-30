@@ -6,6 +6,7 @@ import cf.pies.replay.api.event.PlaybackEndEvent;
 import cf.pies.replay.api.npc.ReplayNPC;
 import cf.pies.replay.api.npc.SpeedcubingNPC;
 import cf.pies.replay.api.recordable.Recordable;
+import cf.pies.replay.api.recordable.UndoRecordable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -147,6 +148,16 @@ public class ReplayPlayback {
      */
     public void end() {
         pause();
+
+        // Replay entire replay, removing everything
+        for (List<Recordable> recordableList : getReplay().getReplayData().values()) {
+            for (Recordable recordable : recordableList) {
+                if (recordable instanceof UndoRecordable) {
+                    ((UndoRecordable) recordable).undo(this);
+                }
+            }
+        }
+
         for (int id : npcs.keySet()) {
             removeNPC(id);
         }

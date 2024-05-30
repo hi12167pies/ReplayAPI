@@ -3,21 +3,16 @@ package cf.pies.replay.api.recordable.world;
 import cf.pies.replay.api.Replay;
 import cf.pies.replay.api.ReplayPlayback;
 import cf.pies.replay.api.recordable.Recordable;
+import cf.pies.replay.api.recordable.UndoRecordable;
 import cf.pies.replay.api.utils.NMS;
 import net.minecraft.server.v1_8_R3.Block;
 import net.minecraft.server.v1_8_R3.PacketPlayOutNamedSoundEffect;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_8_R3.CraftSound;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 
-public class BlockRecordable implements Recordable {
+public class BlockRecordable implements Recordable, UndoRecordable {
     private Location location;
     private final Material material;
     private final byte data;
@@ -52,6 +47,18 @@ public class BlockRecordable implements Recordable {
                         (sound.getVolume1() + 1.0F) / 2.0F, sound.getVolume2() * 0.8F
                 ));
             }
+        }
+    }
+
+    @Override
+    public void undo(ReplayPlayback playback) {
+        Location shiftedLocation = location.clone().add(playback.getOrigin());
+        for (Player player : playback.getListeners()) {
+            NMS.updateBlock(
+                    player, shiftedLocation,
+                    shiftedLocation.getBlock().getType(),
+                    shiftedLocation.getBlock().getData()
+            );
         }
     }
 }
