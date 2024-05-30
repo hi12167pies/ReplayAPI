@@ -19,7 +19,8 @@ ReplayPlayback playback = new ReplayPlayback(plugin, replay, origin);
 
 playback.addListener(player);
 
-playback.start();
+playback.setup();
+playback.play();
 
 playback.pause();
 
