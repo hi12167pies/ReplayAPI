@@ -179,6 +179,30 @@ public class ReplayPlayback {
     }
 
     /**
+     * Reverses one tick of the replay
+     */
+    public void lastTick() {
+        // undo current tick
+        if (replay.getReplayData().containsKey(currentTick)) {
+            List<Recordable> data = replay.getReplayData().get(currentTick);
+            for (Recordable recordable : data) {
+                if (recordable instanceof UndoRecordable) {
+                    ((UndoRecordable) recordable).undo(this);
+                }
+            }
+        }
+        // remove one tick
+        currentTick--;
+        // play next tick
+        if (replay.getReplayData().containsKey(currentTick)) {
+            List<Recordable> data = replay.getReplayData().get(currentTick);
+            for (Recordable recordable : data) {
+                recordable.play(this);
+            }
+        }
+    }
+
+    /**
      * Sends a message to everyone listening to the replay, should only be used for testing
      * @param message Message to send
      */
