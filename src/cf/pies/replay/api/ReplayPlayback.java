@@ -161,8 +161,10 @@ public class ReplayPlayback {
             }
         }
 
-        for (int id : npcs.keySet()) {
-            removeNPC(id);
+        synchronized (npcs) {
+            for (int id : npcs.keySet()) {
+                removeNPC(id);
+            }
         }
 
         Bukkit.getPluginManager().callEvent(new PlaybackEndEvent(this));
