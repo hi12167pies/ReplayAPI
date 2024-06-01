@@ -1,6 +1,7 @@
 package cf.pies.replay.api.npc;
 
 import cf.pies.replay.api.entity.ReplaySkin;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -60,4 +61,29 @@ public interface ReplayNPC {
      * Sets the item in the npc hand
      */
     void setHolding(ItemStack stack);
+
+    /**
+     * Sets the npc helmet item
+     */
+    void setHelmet(ItemStack stack);
+
+    /**
+     * Sets the npc chestplate item
+     */
+    void setChestplate(ItemStack stack);
+
+    /**
+     * Sets the npc leggings item
+     */
+    void setLeggings(ItemStack stack);
+
+    /**
+     * Sets the npc boots item
+     */
+    void setBoots(ItemStack stack);
+
+    /**
+     * Sets the gamemode of the npc
+     */
+    void setGamemode(GameMode gamemode);
 }

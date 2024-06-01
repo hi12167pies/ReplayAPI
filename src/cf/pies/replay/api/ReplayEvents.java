@@ -16,10 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Set;
@@ -166,6 +163,20 @@ public class ReplayEvents implements Listener {
             if (!replay.isRecording()) continue;
             if (replay.isRecordingPlayer(player)) {
                 replay.record(new DamageRecordable(player.getEntityId()));
+            }
+        }
+    }
+
+    @EventHandler(
+            priority = EventPriority.HIGHEST,
+            ignoreCancelled = true
+    )
+    public void gamemodeEvent(PlayerGameModeChangeEvent event) {
+        Player player = event.getPlayer();
+        for (Replay replay : recordingReplays) {
+            if (!replay.isRecording()) continue;
+            if (replay.isRecordingPlayer(player)) {
+                replay.record(new GamemodeRecordable(player.getEntityId(), event.getNewGameMode()));
             }
         }
     }

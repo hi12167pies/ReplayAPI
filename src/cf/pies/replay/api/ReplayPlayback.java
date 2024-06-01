@@ -66,7 +66,8 @@ public class ReplayPlayback {
      * @param info The info of the npc
      */
     public void spawnNpc(int entityId, EntityInfo info) {
-        ReplayNPC npc = new SpeedcubingNPC(info.getName());
+        // Note: This can be changed for another npc library if needed, or native npc packets.
+        ReplayNPC npc = new SpeedcubingNPC(this, info.getName());
 
         for (Player listener : listeners) {
             npc.addListener(listener);
