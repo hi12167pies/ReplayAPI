@@ -89,7 +89,6 @@ public class ReplayPlayback {
     public void removeNPC(int id) {
         ReplayNPC npc = npcs.get(id);
         npc.remove();
-        npcs.remove(id);
     }
 
     /**
@@ -160,6 +159,7 @@ public class ReplayPlayback {
 
         for (int id : npcs.keySet()) {
             removeNPC(id);
+            npcs.remove(id);
         }
         Bukkit.getPluginManager().callEvent(new PlaybackEndEvent(this));
         state = PlaybackState.ENDED;
