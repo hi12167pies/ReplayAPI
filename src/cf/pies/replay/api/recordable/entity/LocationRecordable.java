@@ -24,6 +24,9 @@ public class LocationRecordable implements Recordable {
     public void play(ReplayPlayback playback) {
         ReplayNPC npc = playback.getNPC(entityId);
         if (npc == null) return;
+        if (location.getWorld() != playback.getOrigin().getWorld()) {
+            location.setWorld(playback.getOrigin().getWorld());
+        }
         npc.setLocation(location.clone().add(playback.getOrigin()));
     }
 }
