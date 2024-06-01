@@ -18,6 +18,7 @@ public class Replay {
     private final Set<Integer> recordingEntities = new HashSet<>();
     private final Map<Integer, List<Recordable>> replayData = new HashMap<>();
     private final Map<Integer, EntityInfo> entityInfo = new HashMap<>();
+    private final Map<String, String> metadata = new HashMap<>();
 
     public Replay(Location origin) {
         this.origin = origin;
@@ -188,5 +189,28 @@ public class Replay {
      */
     public void removeRecording() {
         ReplayAPI.getApi().removeRecording(this);
+    }
+
+    /**
+     * Returns all metadata
+     */
+    public Map<String, String> getMetadata() {
+        return metadata;
+    }
+
+    /**
+     * Returns metadata with the name
+     */
+    public String getMetadata(String key) {
+        return metadata.get(key);
+    }
+
+    /**
+     * Sets some replay metadata
+     * @param key The key of the data
+     * @param data The data in the replay
+     */
+    public void setMetadata(String key, String data) {
+        metadata.putIfAbsent(key, data);
     }
 }
