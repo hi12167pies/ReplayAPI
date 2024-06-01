@@ -32,7 +32,7 @@ public class BlockRecordable implements Recordable, UndoRecordable {
 
     @Override
     public void play(ReplayPlayback playback) {
-        if (location.getWorld() != playback.getOrigin().getWorld()) {
+        if (!location.getWorld().equals(playback.getOrigin().getWorld())) {
             location.setWorld(playback.getOrigin().getWorld());
         }
         Location shiftedLocation = location.clone().add(playback.getOrigin());
