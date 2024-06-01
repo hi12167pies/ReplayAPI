@@ -89,6 +89,7 @@ public class ReplayPlayback {
     public void removeNPC(int id) {
         ReplayNPC npc = npcs.get(id);
         npc.remove();
+        npcs.remove(id);
     }
 
     /**
@@ -123,6 +124,7 @@ public class ReplayPlayback {
     public void play() {
         task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             if (currentTick >= replay.getLength()) {
+                pause();
                 end();
                 return;
             }
@@ -146,7 +148,9 @@ public class ReplayPlayback {
      * Ends the replay completely
      */
     public void end() {
-        pause();
+        if (state == PlaybackState.PLAYING) {
+            pause();
+        }
 
         // Replay entire replay, removing everything
         for (List<Recordable> recordableList : getReplay().getReplayData().values()) {
@@ -159,8 +163,8 @@ public class ReplayPlayback {
 
         for (int id : npcs.keySet()) {
             removeNPC(id);
-            npcs.remove(id);
         }
+
         Bukkit.getPluginManager().callEvent(new PlaybackEndEvent(this));
         state = PlaybackState.ENDED;
     }

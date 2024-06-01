@@ -11,6 +11,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayInArmAnimation;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -60,7 +61,10 @@ public class ReplayEvents implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(
+            priority = EventPriority.HIGHEST,
+            ignoreCancelled = true
+    )
     public void moveEvent(PlayerMoveEvent event) {
         for (Replay replay : recordingReplays) {
             if (!replay.isRecording()) continue;
@@ -71,7 +75,10 @@ public class ReplayEvents implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(
+            priority = EventPriority.HIGHEST,
+            ignoreCancelled = true
+    )
     public void sneakEvent(PlayerToggleSneakEvent event) {
         for (Replay replay : recordingReplays) {
             if (!replay.isRecording()) continue;
@@ -82,7 +89,10 @@ public class ReplayEvents implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(
+            priority = EventPriority.HIGHEST,
+            ignoreCancelled = true
+    )
     public void placeEvent(BlockPlaceEvent event) {
         for (Replay replay : recordingReplays) {
             if (!replay.isRecording()) continue;
@@ -98,7 +108,10 @@ public class ReplayEvents implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(
+            priority = EventPriority.HIGHEST,
+            ignoreCancelled = true
+    )
     public void breakEvent(BlockBreakEvent event) {
         for (Replay replay : recordingReplays) {
             if (!replay.isRecording()) continue;
@@ -114,7 +127,10 @@ public class ReplayEvents implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(
+            priority = EventPriority.HIGHEST,
+            ignoreCancelled = true
+    )
     public void switchItemEvent(PlayerItemHeldEvent event) {
         for (Replay replay : recordingReplays) {
             if (!replay.isRecording()) continue;
@@ -139,7 +155,10 @@ public class ReplayEvents implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(
+            priority = EventPriority.HIGHEST,
+            ignoreCancelled = true
+    )
     public void damageEvent(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
