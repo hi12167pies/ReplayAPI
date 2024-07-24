@@ -1,5 +1,7 @@
 ReplayAPI made for spigot 1.8.8
 
+Requires [speedcubingLib](https://github.com/speedcubing-top/speedcubingLib) for NPCS (Optional, you can fork to use your own npc lib)
+
 ```java
 Replay replay = new Replay(origin);
 
