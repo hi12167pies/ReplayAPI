@@ -13,6 +13,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutNamedSoundEffect;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -82,8 +83,8 @@ public class BlockRecordable implements Recordable, UndoRecordable, SaveRecordab
     }
 
     @Override
-    public void read(ReplayInputStream stream) throws IOException {
-        location = stream.readLocation();
+    public void read(ReplayInputStream stream, World world) throws IOException {
+        location = stream.readLocation(world);
         material = stream.readMaterial();
         data = stream.readByte();
         isBroken = stream.readBoolean();

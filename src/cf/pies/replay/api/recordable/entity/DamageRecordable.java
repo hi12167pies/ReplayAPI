@@ -7,6 +7,7 @@ import cf.pies.replay.api.data.stream.ReplayOutputStream;
 import cf.pies.replay.api.npc.ReplayNPC;
 import cf.pies.replay.api.recordable.Recordable;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class DamageRecordable implements Recordable, SaveRecordable {
     }
 
     @Override
-    public void read(ReplayInputStream stream) throws IOException {
+    public void read(ReplayInputStream stream, World world) throws IOException {
         entityId = stream.readInt();
     }
 }

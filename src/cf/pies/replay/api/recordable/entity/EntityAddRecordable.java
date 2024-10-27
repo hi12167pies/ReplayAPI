@@ -6,6 +6,7 @@ import cf.pies.replay.api.data.stream.ReplayInputStream;
 import cf.pies.replay.api.data.stream.ReplayOutputStream;
 import cf.pies.replay.api.entity.EntityInfo;
 import cf.pies.replay.api.recordable.Recordable;
+import org.bukkit.World;
 
 import java.io.IOException;
 
@@ -34,7 +35,7 @@ public class EntityAddRecordable implements Recordable, SaveRecordable {
     }
 
     @Override
-    public void read(ReplayInputStream stream) throws IOException {
+    public void read(ReplayInputStream stream, World world) throws IOException {
         entityId = stream.readInt();
         info = stream.readEntityInfo();
     }

@@ -2,6 +2,7 @@ package cf.pies.replay.api.data;
 
 import cf.pies.replay.api.data.stream.ReplayInputStream;
 import cf.pies.replay.api.data.stream.ReplayOutputStream;
+import org.bukkit.World;
 
 import java.io.IOException;
 
@@ -14,5 +15,5 @@ public interface SaveRecordable {
     /**
      * Reads the data into the recordables.
      */
-    void read(ReplayInputStream stream) throws IOException;
+    void read(ReplayInputStream stream, World world) throws IOException;
 }

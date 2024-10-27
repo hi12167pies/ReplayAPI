@@ -7,6 +7,7 @@ import cf.pies.replay.api.data.stream.ReplayOutputStream;
 import cf.pies.replay.api.npc.ReplayNPC;
 import cf.pies.replay.api.recordable.Recordable;
 import org.bukkit.GameMode;
+import org.bukkit.World;
 
 import java.io.IOException;
 
@@ -36,7 +37,7 @@ public class GamemodeRecordable implements Recordable, SaveRecordable {
     }
 
     @Override
-    public void read(ReplayInputStream stream) throws IOException {
+    public void read(ReplayInputStream stream, World world) throws IOException {
         entityId = stream.readInt();
         gamemode = stream.readGameMode();
     }

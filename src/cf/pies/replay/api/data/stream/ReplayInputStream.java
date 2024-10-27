@@ -9,6 +9,7 @@ import cf.pies.replay.api.recordable.Recordable;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.DataInputStream;
@@ -53,7 +54,7 @@ public class ReplayInputStream extends DataInputStream {
                 boolean valid = readBoolean();
                 if (!valid) continue;
                 int id = readInt();
-                Recordable recordable = readRecordable(id);
+                Recordable recordable = readRecordable(id, origin.getWorld());
                 list.add(recordable);
             }
 
@@ -66,12 +67,16 @@ public class ReplayInputStream extends DataInputStream {
     /**
      * Reads a recordable based on the id.
      */
-    public Recordable readRecordable(int id) throws IOException, InstantiationException, IllegalAccessException {
+    public Recordable readRecordable(int id, World world) throws IOException, InstantiationException, IllegalAccessException {
         Map<Integer, Class<? extends SaveRecordable>> idToRecordable = ReplayAPI.getApi().getIdToRecordableMap();
         Class<? extends SaveRecordable> clazz = idToRecordable.get(id);
 
+        if (clazz == null) {
+            System.out.println("[!] Replay API null class: " + id);
+        }
+
         SaveRecordable recordable = clazz.newInstance();
-        recordable.read(this);
+        recordable.read(this, world);
 
         return (Recordable) recordable;
     }
@@ -136,19 +141,19 @@ public class ReplayInputStream extends DataInputStream {
      */
     @SuppressWarnings("deprecation")
     public Material readMaterial() throws IOException {
-        return Material.getMaterial(readShort());
+        return Material.getMaterial(readInt());
     }
 
     /**
      * Reads a {@link org.bukkit.Location} from the stream.
      */
-    public Location readLocation() throws IOException {
+    public Location readLocation(World world) throws IOException {
         double x = readDouble();
         double y = readDouble();
         double z = readDouble();
         float pitch = readFloat();
         float yaw = readFloat();
 
-        return new Location(null, x, y, z, pitch, yaw);
+        return new Location(world, x, y, z, pitch, yaw);
     }
 }

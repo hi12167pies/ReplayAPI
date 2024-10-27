@@ -81,8 +81,9 @@ public class ReplayOutputStream extends DataOutputStream {
      * Writes a UTF-8 encoded string to the stream.
      */
     public void writeString(String string) throws IOException {
-        writeInt(string.length());
-        write(string.getBytes(StandardCharsets.UTF_8));
+        byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
+        writeInt(bytes.length);
+        write(bytes);
     }
 
     /**
