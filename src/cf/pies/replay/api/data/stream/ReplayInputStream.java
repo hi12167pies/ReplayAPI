@@ -163,6 +163,6 @@ public class ReplayInputStream extends DataInputStream {
         float pitch = readFloat();
         float yaw = readFloat();
 
-        return new Location(world, x, y, z, pitch, yaw);
+        return new Location(world, x, y, z, yaw, pitch);
     }
 }
