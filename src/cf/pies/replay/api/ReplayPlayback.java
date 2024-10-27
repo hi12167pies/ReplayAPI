@@ -132,7 +132,6 @@ public class ReplayPlayback {
         task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             if (currentTick >= replay.getLength()) {
                 pause();
-                end();
                 return;
             }
             nextTick();
