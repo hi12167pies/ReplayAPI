@@ -39,6 +39,15 @@ public class ReplayInputStream extends DataInputStream {
             replay.setMetadata(key, value);
         }
 
+        // Read entity info
+        int entityLength = readInt();
+        for (int i = 0; i < entityLength; i++) {
+            int id = readInt();
+            EntityInfo info = readEntityInfo();
+
+            replay.getEntityInfo().put(id, info);
+        }
+
         // Read replay data
         int replayDataLength = readInt();
         Map<Integer, List<Recordable>> data = replay.getReplayData();

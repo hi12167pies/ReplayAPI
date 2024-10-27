@@ -40,6 +40,13 @@ public class ReplayOutputStream extends DataOutputStream {
             writeString(entry.getValue());
         }
 
+        // Write default entity info
+        writeInt(replay.getEntityInfo().size());
+        for (Map.Entry<Integer, EntityInfo> entry : replay.getEntityInfo().entrySet()) {
+            writeInt(entry.getKey());
+            writeEntityInfo(entry.getValue());
+        }
+
         // Get map of recordables to id
         Map<Class<? extends SaveRecordable>, Integer> recordableToIdMap = ReplayAPI.getApi().getRecordableToIdMap();
 
