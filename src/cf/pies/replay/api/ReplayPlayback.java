@@ -3,6 +3,7 @@ package cf.pies.replay.api;
 import cf.pies.replay.api.entity.EntityInfo;
 import cf.pies.replay.api.enums.PlaybackState;
 import cf.pies.replay.api.event.PlaybackEndEvent;
+import cf.pies.replay.api.event.PlaybackStateChangeEvent;
 import cf.pies.replay.api.npc.ReplayNPC;
 import cf.pies.replay.api.npc.SpeedcubingNPC;
 import cf.pies.replay.api.recordable.Recordable;
@@ -58,6 +59,11 @@ public class ReplayPlayback {
 
     public PlaybackState getState() {
         return state;
+    }
+
+    private void setState(PlaybackState state) {
+        this.state = state;
+        Bukkit.getPluginManager().callEvent(new PlaybackStateChangeEvent(this));
     }
 
     /**
@@ -131,7 +137,7 @@ public class ReplayPlayback {
             }
             nextTick();
         }, 0L, 1L);
-        state = PlaybackState.PLAYING;
+        setState(PlaybackState.PLAYING);
     }
 
     /**
@@ -142,7 +148,7 @@ public class ReplayPlayback {
             Bukkit.getScheduler().cancelTask(task);
             task = -1;
         }
-        state = PlaybackState.PAUSED;
+        setState(PlaybackState.PAUSED);
     }
 
     /**
@@ -169,7 +175,7 @@ public class ReplayPlayback {
         }
 
         Bukkit.getPluginManager().callEvent(new PlaybackEndEvent(this));
-        state = PlaybackState.ENDED;
+        setState(PlaybackState.ENDED);
     }
 
     /**
