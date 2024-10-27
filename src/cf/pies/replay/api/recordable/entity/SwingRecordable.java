@@ -13,6 +13,9 @@ import java.io.IOException;
 public class SwingRecordable implements Recordable, SaveRecordable {
     private int entityId;
 
+    public SwingRecordable() {
+    }
+
     public SwingRecordable(int entityId) {
         this.entityId = entityId;
     }
