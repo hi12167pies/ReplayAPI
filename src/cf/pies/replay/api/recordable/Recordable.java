@@ -7,7 +7,7 @@ public interface Recordable {
     /**
      * Called when event recorded
      */
-    void onRecord(Replay replay);
+    default void onRecord(Replay replay) {}
 
     /**
      * Called on playback

@@ -2,6 +2,9 @@ package cf.pies.replay.api.recordable.world;
 
 import cf.pies.replay.api.Replay;
 import cf.pies.replay.api.ReplayPlayback;
+import cf.pies.replay.api.data.SaveRecordable;
+import cf.pies.replay.api.data.stream.ReplayInputStream;
+import cf.pies.replay.api.data.stream.ReplayOutputStream;
 import cf.pies.replay.api.recordable.Recordable;
 import cf.pies.replay.api.recordable.UndoRecordable;
 import cf.pies.replay.api.utils.NMS;
@@ -12,11 +15,16 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public class BlockRecordable implements Recordable, UndoRecordable {
+import java.io.IOException;
+
+public class BlockRecordable implements Recordable, UndoRecordable, SaveRecordable {
     private Location location;
-    private final Material material;
-    private final byte data;
-    private final boolean isBroken;
+    private Material material;
+    private byte data;
+    private boolean isBroken;
+
+    public BlockRecordable() {
+    }
 
     public BlockRecordable(Location location, Material material, byte data, boolean isBroken) {
         this.location = location;
@@ -63,5 +71,21 @@ public class BlockRecordable implements Recordable, UndoRecordable {
                     shiftedLocation.getBlock().getData()
             );
         }
+    }
+
+    @Override
+    public void write(ReplayOutputStream stream) throws IOException {
+        stream.writeLocation(location);
+        stream.writeMaterial(material);
+        stream.writeByte(data);
+        stream.writeBoolean(isBroken);
+    }
+
+    @Override
+    public void read(ReplayInputStream stream) throws IOException {
+        location = stream.readLocation();
+        material = stream.readMaterial();
+        data = stream.readByte();
+        isBroken = stream.readBoolean();
     }
 }

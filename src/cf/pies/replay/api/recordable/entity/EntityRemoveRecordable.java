@@ -1,21 +1,21 @@
 package cf.pies.replay.api.recordable.entity;
 
-import cf.pies.replay.api.Replay;
 import cf.pies.replay.api.ReplayPlayback;
-import cf.pies.replay.api.entity.EntityInfo;
+import cf.pies.replay.api.data.SaveRecordable;
+import cf.pies.replay.api.data.stream.ReplayInputStream;
+import cf.pies.replay.api.data.stream.ReplayOutputStream;
 import cf.pies.replay.api.recordable.Recordable;
 
-public class EntityRemoveRecordable implements Recordable {
-    private final int entityId;
+import java.io.IOException;
+
+public class EntityRemoveRecordable implements Recordable, SaveRecordable {
+    private int entityId;
+
+    public EntityRemoveRecordable() {
+    }
 
     public EntityRemoveRecordable(int entityId) {
         this.entityId = entityId;
-    }
-
-
-    @Override
-    public void onRecord(Replay replay) {
-
     }
 
     @Override
@@ -24,5 +24,15 @@ public class EntityRemoveRecordable implements Recordable {
             playback.removeNPC(entityId);
         }
         playback.getReplay().getEntityInfo().remove(entityId);
+    }
+
+    @Override
+    public void write(ReplayOutputStream stream) throws IOException {
+        stream.writeInt(entityId);
+    }
+
+    @Override
+    public void read(ReplayInputStream stream) throws IOException {
+        entityId = stream.readInt();
     }
 }
