@@ -35,11 +35,10 @@
 
     <dependencies>
         <dependency>
-            <groupId>spigot</groupId>
+            <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <scope>system</scope>
-            <version>1.0</version>
-            <systemPath>E:/Jars/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar</systemPath>
+            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
