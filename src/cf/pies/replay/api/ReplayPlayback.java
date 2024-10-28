@@ -114,6 +114,14 @@ public class ReplayPlayback {
     }
 
     /**
+     * Sets the tick of the playback
+     * Note: This does not change anything in the replay beside the variable.
+     */
+    public void setCurrentTick(int currentTick) {
+        this.currentTick = currentTick;
+    }
+
+    /**
      * Setups the replay npcs and other stuff
      */
     public void setup() {
