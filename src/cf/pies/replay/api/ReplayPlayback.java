@@ -132,6 +132,7 @@ public class ReplayPlayback {
             spawnNpc(id, info);
         }
 
+        setState(PlaybackState.NONE);
         playTick();
     }
 
@@ -181,6 +182,7 @@ public class ReplayPlayback {
             for (int id : npcs.keySet()) {
                 removeNPC(id);
             }
+            npcs.clear();
         }
 
         Bukkit.getPluginManager().callEvent(new PlaybackEndEvent(this));
