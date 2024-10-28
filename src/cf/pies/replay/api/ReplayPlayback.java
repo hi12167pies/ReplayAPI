@@ -123,6 +123,8 @@ public class ReplayPlayback {
             EntityInfo info = replay.getEntityInfo().get(id);
             spawnNpc(id, info);
         }
+
+        playTick();
     }
 
     /**
@@ -181,13 +183,21 @@ public class ReplayPlayback {
      * Plays one tick of the replay
      */
     public void nextTick() {
+        currentTick++;
+        playTick();
+    }
+
+    /**
+     * Plays the current tick of the replay.
+     * Not recommended to use, use nextTick or lastTick instead.
+     */
+    public void playTick() {
         if (replay.getReplayData().containsKey(currentTick)) {
             List<Recordable> data = replay.getReplayData().get(currentTick);
             for (Recordable recordable : data) {
                 recordable.play(this);
             }
         }
-        currentTick++;
     }
 
     /**
