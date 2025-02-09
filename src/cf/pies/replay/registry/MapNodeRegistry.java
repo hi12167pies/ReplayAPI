@@ -26,7 +26,6 @@ public class MapNodeRegistry implements ReplayNodeRegistry, Cloneable {
     public ReplayNodeRegistry register(int id, Class<? extends Node> nodeClass) {
         nodeToId.put(nodeClass, id);
         idToNode.put(id, nodeClass);
-
         return this;
     }
 
