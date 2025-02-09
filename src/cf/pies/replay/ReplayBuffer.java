@@ -3,7 +3,7 @@ package cf.pies.replay;
 import java.io.IOException;
 
 /**
- * This interface represents a replay that can be buffered to a disk / external location before being commited to a database.
+ * This interface represents a replay that can be buffered to an external location before being commited to a database.
  */
 public interface ReplayBuffer {
     /**

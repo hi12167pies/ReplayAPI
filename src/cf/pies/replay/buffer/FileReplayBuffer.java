@@ -3,18 +3,18 @@ package cf.pies.replay.buffer;
 import cf.pies.replay.Node;
 import cf.pies.replay.ReplayBuffer;
 import cf.pies.replay.ReplayNodeRegistry;
-import cf.pies.replay.stream.ReplayOutputStream;
+import cf.pies.replay.stream.NodeOutputStream;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class FileReplayBuffer implements ReplayBuffer {
-    private final ReplayOutputStream stream;
+    private final NodeOutputStream stream;
 
     public FileReplayBuffer(ReplayNodeRegistry nodeRegistry, File file) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(file);
-        stream = new ReplayOutputStream(fileOutputStream, nodeRegistry);
+        stream = new NodeOutputStream(fileOutputStream, nodeRegistry);
     }
 
     @Override

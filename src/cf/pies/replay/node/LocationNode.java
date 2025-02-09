@@ -1,7 +1,7 @@
 package cf.pies.replay.node;
 
 import cf.pies.replay.Node;
-import cf.pies.replay.stream.ReplayOutputStream;
+import cf.pies.replay.stream.NodeOutputStream;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class LocationNode implements Node {
     private float pitch;
 
     @Override
-    public void write(ReplayOutputStream stream) throws IOException {
+    public void write(NodeOutputStream stream) throws IOException {
         stream.writeVarInt(entityId);
         stream.writeDouble(x);
         stream.writeDouble(y);
