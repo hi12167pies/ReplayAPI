@@ -2,6 +2,7 @@ package cf.pies.replay.factory;
 
 import cf.pies.replay.ReplayBuffer;
 import cf.pies.replay.ReplayNodeRegistry;
+import cf.pies.replay.ReplayTimeManager;
 import cf.pies.replay.buffer.FileReplayBuffer;
 import cf.pies.replay.node.LocationNode;
 import cf.pies.replay.registry.MapNodeRegistry;
@@ -17,17 +18,19 @@ public class ReplayBufferFactory {
             .register(0x01, LocationNode.class);
 
     private final ReplayNodeRegistry nodeRegistry;
+    private final ReplayTimeManager timeManager;
 
     /**
      * @param nodeRegistry The registry that will be used for writing nodes.
      *                     If the registry is null, it will copy the default registry (and you can modify it).
      */
-    public ReplayBufferFactory(@Nullable ReplayNodeRegistry nodeRegistry) {
+    public ReplayBufferFactory(@Nullable ReplayNodeRegistry nodeRegistry, ReplayTimeManager timeManager) {
         if (nodeRegistry == null) {
             this.nodeRegistry = defaultRegistry.clone();
         } else {
             this.nodeRegistry = nodeRegistry;
         }
+        this.timeManager = timeManager;
     }
 
     /**
@@ -35,6 +38,6 @@ public class ReplayBufferFactory {
      * This buffer is opened once you create it.
      */
     public ReplayBuffer createFileBuffer(File file) throws IOException {
-        return new FileReplayBuffer(nodeRegistry, file);
+        return new FileReplayBuffer(nodeRegistry, timeManager, file);
     }
 }
