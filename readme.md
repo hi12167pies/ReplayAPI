@@ -17,6 +17,13 @@ Requirements:
   - [Saving](#saving)
   - [Loading](#loading)
 
+# Initialize 
+To set up all the recording, and recordables you must initialize the api with a plugin.
+
+```java
+ReplayAPI.getApi().initalize(plugin);
+```
+
 # Recording
 ```java
 // Create a replay object.
