@@ -1,6 +1,8 @@
-package cf.pies.replay;
+package cf.pies.replay.record;
 
+import cf.pies.replay.buffer.ReplayBuffer;
 import cf.pies.replay.recordable.Recordable;
+import cf.pies.replay.time.ReplayTime;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 public class ReplayRecorder {
+    private final ReplayTime time;
     private final ReplayBuffer buffer;
 
     /**
@@ -21,8 +24,7 @@ public class ReplayRecorder {
     private List<Recordable> currentTickRecordables = new ArrayList<>();
 
     /**
-     * The current tick of the replay.
-     * Increment with {@link ReplayRecorder#nextTick()}
+     * Current tick and state of the {@link ReplayRecorder#currentTickRecordables}
      */
     private int currentTick = 0;
 
@@ -41,21 +43,21 @@ public class ReplayRecorder {
         }
     }
 
-    public void start() {
-        try {
-            buffer.begin();
-        } catch (Exception exception) {
-
-        }
-    }
-
     /**
-     * Advances to the next tick in the replay.
+     * Begins the replay recording (internally)
+     * Ticking and recording is required manually or by a helper class.
+     * @throws Exception An exception may be thrown by upstream classes such as the buffer
      */
-    public void nextTick() {
-        finishTick();
-        currentTick++;
+    public void start() throws Exception {
+        buffer.begin();
     }
+
+    public void end() {
+        finishTick();
+        buffer.end();
+    }
+
+
 
     public void record(Recordable recordable) {
         currentTickRecordables.add(recordable);

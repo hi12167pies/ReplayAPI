@@ -1,6 +1,5 @@
 package cf.pies.replay.buffer;
 
-import cf.pies.replay.ReplayBuffer;
 import cf.pies.replay.recordable.Recordable;
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +20,16 @@ public class DiskBuffer implements ReplayBuffer {
 
     @Override
     public void begin() throws IOException {
+        if (file.exists()) {
+            if (!file.delete()) {
+                throw new IOException("Failed to delete existing file: " + file.getAbsolutePath());
+            }
+        }
+
+        if (!file.createNewFile()) {
+            throw new IOException("Failed to create new file: " + file.getAbsolutePath());
+        }
+
         stream = new ObjectOutputStream(Files.newOutputStream(file.toPath()));
     }
 
@@ -33,6 +42,14 @@ public class DiskBuffer implements ReplayBuffer {
             }
         } catch (IOException err) {
             err.printStackTrace(System.err);
+        }
+    }
+
+    @Override
+    public void end() {
+        try {
+            stream.close();
+        } catch (IOException ignored) {
         }
     }
 }
