@@ -2,6 +2,7 @@ package cf.pies.replay.recordable.entity;
 
 import cf.pies.replay.recordable.EntityRecordable;
 import cf.pies.replay.recordable.Recordable;
+import cf.pies.replay.type.data.Vec3d;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -13,13 +14,11 @@ import java.io.Serializable;
 @Getter
 @RequiredArgsConstructor
 public class LocationRecordable implements EntityRecordable, Recordable, Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
 
     private final int entityId;
 
-    private final double x;
-    private final double y;
-    private final double z;
+    private final Vec3d location;
 
     private final float pitch;
     private final float yaw;

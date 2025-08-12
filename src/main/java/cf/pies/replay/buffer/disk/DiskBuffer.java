@@ -1,5 +1,6 @@
-package cf.pies.replay.buffer;
+package cf.pies.replay.buffer.disk;
 
+import cf.pies.replay.buffer.ReplayBufferWriter;
 import cf.pies.replay.recordable.Recordable;
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * Once completed reads back object my object
  */
 @RequiredArgsConstructor
-public class DiskBuffer implements ReplayBuffer {
+public class DiskBuffer implements ReplayBufferWriter {
     private final File file;
     private ObjectOutputStream stream;
 
