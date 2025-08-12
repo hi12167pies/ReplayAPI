@@ -1,13 +1,24 @@
 package cf.pies.replay.type.serialize;
 
-import lombok.experimental.SuperBuilder;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 
 /**
  * A {@link Vec3f}, except with origin util methods!
  */
-@SuperBuilder
 public class Vec3fOrigin extends Vec3i {
+    public static Vec3fOrigin from(Location location) {
+        return new Vec3fOrigin(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+    }
+
+    public static Vec3fOrigin from(Block block) {
+        return from(block.getLocation());
+    }
+
+    public Vec3fOrigin(int x, int y, int z) {
+        super(x, y, z);
+    }
+
     /**
      * Create a new instance of {@link Vec3f} shifted (subtracted) from the location.
      */
