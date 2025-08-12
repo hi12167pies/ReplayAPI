@@ -15,15 +15,13 @@ public class RefrainsPlayerNpc implements ReplayNpcPlayer {
         return ((CraftPlayer) player).getHandle().playerConnection;
     }
 
-    private final ReplayAPI replayApi;
     private final NpcsApi api;
 
     // Marked protected in-case someone wants to extend this
     protected Npc npc;
 
     public RefrainsPlayerNpc(ReplayAPI api) {
-        this.replayApi = api;
-        this.api = replayApi.getNpcsApi();
+        this.api = api.getNpcsApi();
     }
 
     public void create(String name, Location location) {
