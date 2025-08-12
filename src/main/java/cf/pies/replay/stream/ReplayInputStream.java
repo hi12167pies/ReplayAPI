@@ -34,6 +34,10 @@ public class ReplayInputStream extends DataInputStream implements ReplayStream {
      * <a href="https://minecraft.wiki/w/Java_Edition_protocol/Data_types#VarInt_and_VarLong">VarInt reference</a>
      */
     public int readVarInt() throws IOException {
+        return decodeZigZag32(readUnsignedVarInt());
+    }
+
+    public int readUnsignedVarInt() throws IOException {
         int value = 0;
         int position = 0;
         byte currentByte;
@@ -49,7 +53,7 @@ public class ReplayInputStream extends DataInputStream implements ReplayStream {
             if (position >= 32) throw new RuntimeException("VarInt is too big");
         }
 
-        return decodeZigZag32(value);
+        return value;
     }
 
     /**
@@ -60,7 +64,7 @@ public class ReplayInputStream extends DataInputStream implements ReplayStream {
      */
     public float readVarFloat() throws IOException {
         int whole = readVarInt();
-        int mantissa = readVarInt();
+        int mantissa = readUnsignedVarInt();
 
         return (whole + ((float) mantissa / MANTISSA_LENGTH));
     }

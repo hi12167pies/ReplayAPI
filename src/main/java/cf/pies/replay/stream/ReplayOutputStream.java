@@ -21,6 +21,10 @@ public class ReplayOutputStream extends DataOutputStream implements ReplayStream
     }
 
     public void writeVarInt(int value) throws IOException {
+        writeUnsignedVarInt(encodeZigZag32(value));
+    }
+
+    public void writeUnsignedVarInt(int value) throws IOException {
         value = encodeZigZag32(value);
         while (true) {
             if ((value & ~SEGMENT_BITS) == 0) {
@@ -40,7 +44,7 @@ public class ReplayOutputStream extends DataOutputStream implements ReplayStream
         int mantissa = (int) ((f - whole) * MANTISSA_LENGTH);
 
         writeVarInt(whole);
-        writeVarInt(mantissa);
+        writeUnsignedVarInt(mantissa);
     }
 
     public void writeVec3i(Vec3i vec) throws IOException {
