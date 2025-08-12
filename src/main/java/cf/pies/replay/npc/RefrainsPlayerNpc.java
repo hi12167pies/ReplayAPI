@@ -3,13 +3,14 @@ package cf.pies.replay.npc;
 import cf.pies.replay.ReplayAPI;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
 import nz.blair.npcs.NpcsApi;
+import nz.blair.npcs.npcs.Animation;
 import nz.blair.npcs.npcs.Npc;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class RefrainsPlayerNpc implements ReplayPlayerNpc {
+public class RefrainsPlayerNpc implements ReplayNpcPlayer {
     private static PlayerConnection getNMSConnection(Player player) {
         return ((CraftPlayer) player).getHandle().playerConnection;
     }
@@ -47,6 +48,16 @@ public class RefrainsPlayerNpc implements ReplayPlayerNpc {
     @Override
     public void setLocation(Location location) {
         npc.setLocation(location);
+    }
+
+    @Override
+    public void animateDamage() {
+        npc.playAnimation(Animation.TAKE_DAMAGE);
+    }
+
+    @Override
+    public void animateSwing() {
+        npc.playAnimation(Animation.SWING_ARM);
     }
 
     @Override
