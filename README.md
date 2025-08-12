@@ -9,6 +9,23 @@ Breaking changes are very likely to happen
 The README currently contains notes about the structure of the project, this will probably move to another file or be deleted.
 This is mostly just a brain dump of information I might need later
 
+# Initialize and disable api
+
+
+The api object is not used for much unless a specific part of the api requires it.
+
+This object is primarily used for if a part of the api needs access to the plugin, otherwise there is no other data stored in here.
+
+You can get away without registering this stuff if you are not using playback (for now)
+```java
+ReplayAPI api = new ReplayAPI(plugin);
+
+api.enable();
+
+// remember to disable the plugin
+api.disable();
+```
+
 # Replay Buffer
 Replay buffers write to disk or to another location to buffer off data that is no longer needed, this will be loaded back later
 
