@@ -26,6 +26,13 @@ api.enable();
 api.disable();
 ```
 
+# Npcs
+This plugin uses a fork of [refrains npcs](https://github.com/refrainsclub/npcs) internally and can be changed by creating your own ReplayNpcs
+ 
+Needed to build the plugin: [Fork of refrains npcs the plugin uses here](https://github.com/hi12167pies/refrains-npcs)
+
+Use `gradlew build publish` then it will be available on maven
+
 # Replay Buffer
 Replay buffers write to disk or to another location to buffer off data that is no longer needed, this will be loaded back later
 
