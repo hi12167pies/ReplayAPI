@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class RecordableStore {
     @Getter
-    private static RecordableStore defaultStore = new RecordableStore();
+    private static final RecordableStore defaultStore = new RecordableStore();
 
     static {
         defaultStore.register(0x1, LocationRecordable.class);
