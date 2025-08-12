@@ -5,7 +5,7 @@ import cf.pies.replay.recordable.Recordable;
 import cf.pies.replay.time.ReplayTime;
 import cf.pies.replay.type.EntityType;
 import cf.pies.replay.type.EntityMetadata;
-import cf.pies.replay.type.serialize.Vec3f;
+import cf.pies.replay.type.serialize.Vec3fOrigin;
 import io.netty.util.collection.IntObjectHashMap;
 import io.netty.util.collection.IntObjectMap;
 import lombok.Getter;
@@ -27,8 +27,12 @@ public class ReplaySession {
     private final ReplayTime time;
     private final ReplayBufferWriter buffer;
 
+    /**
+     * The origin should be a location that all other locations are relative to.
+     * Some examples are player spawn (for 1 player), map center (for multiplayer) or just a random location
+     */
     @Getter
-    private final Vec3f origin;
+    private final Vec3fOrigin origin;
 
     /**
      * A list of recordables in the current tick.

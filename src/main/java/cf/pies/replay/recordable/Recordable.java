@@ -7,5 +7,5 @@ import java.io.Serializable;
  * A recordable is simply a frame in the replay that can be played back later.
  * Recordables are serializable for buffering.
  */
-public interface Recordable extends Serializable {
+public interface Recordable extends Serializable, ReplaySerializable {
 }

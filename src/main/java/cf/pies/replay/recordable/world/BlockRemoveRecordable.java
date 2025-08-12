@@ -18,7 +18,7 @@ import java.io.IOException;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlockRemoveRecordable implements Recordable, ReplaySerializable {
+public class BlockRemoveRecordable implements Recordable {
     private Vec3i position;
 
     @Override

@@ -1,13 +1,13 @@
 package cf.pies.replay.type.serialize;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.bukkit.Location;
 
 import java.io.Serializable;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class Vec3f implements Serializable {
     public static Vec3f from(Location location) {
         return new Vec3f(

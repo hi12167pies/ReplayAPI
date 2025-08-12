@@ -1,5 +1,7 @@
 package cf.pies.replay.stream;
 
+import cf.pies.replay.type.serialize.MaterialInfo;
+import cf.pies.replay.type.serialize.Vec3f;
 import cf.pies.replay.type.serialize.Vec3i;
 
 import java.io.DataOutputStream;
@@ -42,9 +44,14 @@ public class ReplayOutputStream extends DataOutputStream implements ReplayStream
         writeVarInt(vec.getZ());
     }
 
-    public void writeVec3d(Vec3i vec, boolean writeAsVarFloat) throws IOException {
-        writeVarInt(vec.getX());
-        writeVarInt(vec.getY());
-        writeVarInt(vec.getZ());
+    public void writeVec3f(Vec3f vec) throws IOException {
+        writeVarFloat(vec.getX());
+        writeVarFloat(vec.getY());
+        writeVarFloat(vec.getZ());
+    }
+
+    public void writeMaterialInfo(MaterialInfo info) throws IOException {
+        this.writeVarInt(info.getId());
+        this.writeByte(info.getData());
     }
 }

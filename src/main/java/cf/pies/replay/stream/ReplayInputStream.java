@@ -1,5 +1,7 @@
 package cf.pies.replay.stream;
 
+import cf.pies.replay.type.serialize.MaterialInfo;
+import cf.pies.replay.type.serialize.Vec3f;
 import cf.pies.replay.type.serialize.Vec3i;
 
 import java.io.DataInputStream;
@@ -54,5 +56,20 @@ public class ReplayInputStream extends DataInputStream implements ReplayStream {
         int z = readVarInt();
 
         return new Vec3i(x, y, z);
+    }
+
+    public Vec3f readVec3f() throws IOException {
+        float x = readVarFloat();
+        float y = readVarFloat();
+        float z = readVarFloat();
+
+        return new Vec3f(x, y, z);
+    }
+
+    public MaterialInfo readMaterialInfo() throws IOException {
+        int id = readVarInt();
+        byte data = readByte();
+
+        return new MaterialInfo(id, data);
     }
 }

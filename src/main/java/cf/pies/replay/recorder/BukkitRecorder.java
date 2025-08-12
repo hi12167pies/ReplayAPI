@@ -1,12 +1,10 @@
 package cf.pies.replay.recorder;
 
-import cf.pies.replay.recording.ReplaySession;
 import cf.pies.replay.recordable.entity.LocationRecordable;
 import cf.pies.replay.recordable.world.BlockChangeRecordable;
 import cf.pies.replay.recordable.world.BlockRemoveRecordable;
+import cf.pies.replay.recording.ReplaySession;
 import cf.pies.replay.type.serialize.MaterialInfo;
-import cf.pies.replay.type.serialize.Vec3f;
-import cf.pies.replay.type.serialize.Vec3i;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -64,7 +62,7 @@ public class BukkitRecorder implements Recorder, Listener {
             int recId = replay.getEntityIdToRecId(entityId);
             replay.record(new LocationRecordable(
                     recId,
-                    Vec3f.from(location),
+                    replay.getOrigin().shiftFloat(location),
                     location.getYaw(),
                     location.getPitch()
             ));
@@ -83,12 +81,13 @@ public class BukkitRecorder implements Recorder, Listener {
         int entityId = player.getEntityId();
 
         Block block = event.getBlockPlaced();
+        Location location = block.getLocation();
 
         for (ReplaySession replay : replays) {
             if (isRecordableEntity(entityId, replay)) continue;
 
             replay.record(new BlockChangeRecordable(
-                    Vec3i.from(block),
+                    replay.getOrigin().shiftInt(location),
                     MaterialInfo.from(block)
             ));
         }
@@ -106,12 +105,13 @@ public class BukkitRecorder implements Recorder, Listener {
         int entityId = player.getEntityId();
 
         Block block = event.getBlock();
+        Location location = block.getLocation();
 
         for (ReplaySession replay : replays) {
             if (isRecordableEntity(entityId, replay)) continue;
 
             replay.record(new BlockRemoveRecordable(
-                    Vec3i.from(block)
+                    replay.getOrigin().shiftInt(location)
             ));
         }
     }

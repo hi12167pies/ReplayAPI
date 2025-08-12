@@ -7,6 +7,7 @@ Currently, this branch is in development and should not be used unless you would
 Breaking changes are very likely to happen
 
 The README currently contains notes about the structure of the project, this will probably move to another file or be deleted.
+This is mostly just a brain dump of information I might need later
 
 # Replay Buffer
 Replay buffers write to disk or to another location to buffer off data that is no longer needed, this will be loaded back later
@@ -40,3 +41,9 @@ EntityId is the actual bukkit id is of entity
 3. Create, make your own, or use an existing recorder and add the RecordingReplay class to it (e.g BukkitRecorder)
 4. Add entity to replay if needed
 5. Start / Stop / Use this replay
+
+# Origin
+The origin is a location that all other locations in the replay are relative to
+Example: Player spawn (for 1 player), map center (for multiplayer) or just a random location
+
+Why? When playing the replay back the origin is needed so your playback in another location
