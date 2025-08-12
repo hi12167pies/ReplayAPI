@@ -1,9 +1,11 @@
 package cf.pies.replay.recordable;
 
+import java.io.Serializable;
+
 /**
  * This is the base interface that any recordable should implement.
  * A recordable is simply a frame in the replay that can be played back later.
- * Recordables must be serializable for buffering.
+ * Recordables are serializable for buffering.
  */
-public interface Recordable {
+public interface Recordable extends Serializable {
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Saves all replay frames to a file on disk.
- * Once completed reads back object my object
+ * Once completed reads back object by object
  */
 @RequiredArgsConstructor
 public class DiskBuffer implements ReplayBufferWriter {

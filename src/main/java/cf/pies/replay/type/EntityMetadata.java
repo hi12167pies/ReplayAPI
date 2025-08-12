@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class ReplayEntityMetadata {
+public class EntityMetadata {
     private final int id;
     private final EntityType type;
 }
