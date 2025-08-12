@@ -15,6 +15,21 @@ public class ReplayInputStream extends DataInputStream implements ReplayStream {
     }
 
     /**
+     * Flips the signed bit to other side of binary
+     * e.g.
+     * <code>
+     * Default: 1100
+     *          ^ Signed bit
+     * Zigzag:
+     *         0101
+     *            ^ Signed bit
+     * </code>
+     */
+    private int decodeZigZag32(int n) {
+        return (n >>> 1) ^ -(n & 1);
+    }
+
+    /**
      * Same a Mojang VarInt defined on protocol wiki
      * <a href="https://minecraft.wiki/w/Java_Edition_protocol/Data_types#VarInt_and_VarLong">VarInt reference</a>
      */
@@ -34,7 +49,7 @@ public class ReplayInputStream extends DataInputStream implements ReplayStream {
             if (position >= 32) throw new RuntimeException("VarInt is too big");
         }
 
-        return value;
+        return decodeZigZag32(value);
     }
 
     /**

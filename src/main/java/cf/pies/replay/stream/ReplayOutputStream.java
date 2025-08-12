@@ -16,7 +16,12 @@ public class ReplayOutputStream extends DataOutputStream implements ReplayStream
         super(out);
     }
 
+    private int encodeZigZag32(int n) {
+        return (n << 1) ^ (n >> 31);
+    }
+
     public void writeVarInt(int value) throws IOException {
+        value = encodeZigZag32(value);
         while (true) {
             if ((value & ~SEGMENT_BITS) == 0) {
                 writeByte(value);
