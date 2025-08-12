@@ -2,6 +2,8 @@ package cf.pies.replay.buffer.disk;
 
 import cf.pies.replay.buffer.ReplayBufferWriter;
 import cf.pies.replay.recordable.Recordable;
+import cf.pies.replay.recordable.RecordableStore;
+import cf.pies.replay.stream.ReplayOutputStream;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
@@ -17,7 +19,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DiskBuffer implements ReplayBufferWriter {
     private final File file;
-    private ObjectOutputStream stream;
+    private final RecordableStore store;
+
+    private ReplayOutputStream stream;
 
     @Override
     public void begin() throws IOException {
@@ -31,18 +35,27 @@ public class DiskBuffer implements ReplayBufferWriter {
             throw new IOException("Failed to create new file: " + file.getAbsolutePath());
         }
 
-        stream = new ObjectOutputStream(Files.newOutputStream(file.toPath()));
+        stream = new ReplayOutputStream(Files.newOutputStream(file.toPath()));
     }
 
     @Override
     public void submit(int tick, List<Recordable> recordables) {
         try {
-            stream.write(tick);
+            System.out.println(tick + " submitted " + recordables.size());
+            // tick
+            stream.writeVarInt(tick);
+
+            // list size
+            stream.writeVarInt(recordables.size());
             for (Recordable recordable : recordables) {
-                stream.writeObject(recordable);
+                // recordable id
+                stream.writeVarInt(store.getIdByRecordable(recordable.getClass()));
+
+                // recordable data
+                recordable.write(stream);
             }
         } catch (IOException err) {
-            err.printStackTrace(System.err);
+            err.printStackTrace(System.out);
         }
     }
 
