@@ -107,7 +107,11 @@ public class ReplaySession {
      * @param recId The entities id in the replay, this can be the actual entity or id or just an incrementing number.
      * @param entity This must be a supported entity which will be added.
      */
-    public void addEntity(int recId, EntityType type, Entity entity) throws IllegalArgumentException {
+    public void addEntity(int recId, EntityType type, Entity entity) throws IllegalArgumentException, IllegalStateException {
+        if (active) {
+            // TODO: Add support for this, would be very useful
+            throw new IllegalStateException("Cannot add entities while replay is running");
+        }
         if (entity.getClass().isInstance(type.getEntityClass())) {
             throw new IllegalArgumentException("Entity type does not match supplied entity");
         }
