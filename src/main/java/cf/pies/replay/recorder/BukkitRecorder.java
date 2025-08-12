@@ -57,7 +57,7 @@ public class BukkitRecorder implements Recorder, Listener {
 
         Location location = event.getTo();
         for (ReplaySession replay : replays) {
-            if (isRecordableEntity(entityId, replay)) continue;
+            if (!isRecordableEntity(entityId, replay)) continue;
 
             int recId = replay.getEntityIdToRecId(entityId);
             replay.record(new LocationRecordable(
@@ -84,7 +84,7 @@ public class BukkitRecorder implements Recorder, Listener {
         Location location = block.getLocation();
 
         for (ReplaySession replay : replays) {
-            if (isRecordableEntity(entityId, replay)) continue;
+            if (!isRecordableEntity(entityId, replay)) continue;
 
             replay.record(new BlockChangeRecordable(
                     replay.getOrigin().shiftInt(location),
@@ -108,7 +108,7 @@ public class BukkitRecorder implements Recorder, Listener {
         Location location = block.getLocation();
 
         for (ReplaySession replay : replays) {
-            if (isRecordableEntity(entityId, replay)) continue;
+            if (!isRecordableEntity(entityId, replay)) continue;
 
             replay.record(new BlockRemoveRecordable(
                     replay.getOrigin().shiftInt(location)
