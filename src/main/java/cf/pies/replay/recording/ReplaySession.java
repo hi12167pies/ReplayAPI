@@ -1,6 +1,6 @@
 package cf.pies.replay.recording;
 
-import cf.pies.replay.buffer.ReplayBufferWriter;
+import cf.pies.replay.buffer.ReplayBuffer;
 import cf.pies.replay.recordable.Recordable;
 import cf.pies.replay.time.ReplayTime;
 import cf.pies.replay.type.EntityType;
@@ -25,7 +25,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ReplaySession {
     private final ReplayTime time;
-    private final ReplayBufferWriter buffer;
+    private final ReplayBuffer buffer;
 
     /**
      * The origin should be a location that all other locations are relative to.

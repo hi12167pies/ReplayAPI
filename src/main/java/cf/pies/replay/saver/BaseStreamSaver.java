@@ -8,7 +8,5 @@ import java.io.OutputStream;
 public abstract class BaseStreamSaver implements ReplaySaver {
     private void writeReplay(ReplaySession session, OutputStream outputStream) {
         ReplayOutputStream stream = new ReplayOutputStream(outputStream);
-
-
     }
 }
