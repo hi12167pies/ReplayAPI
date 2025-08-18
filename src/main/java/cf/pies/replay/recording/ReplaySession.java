@@ -3,8 +3,8 @@ package cf.pies.replay.recording;
 import cf.pies.replay.buffer.ReplayBuffer;
 import cf.pies.replay.recordable.Recordable;
 import cf.pies.replay.time.ReplayTime;
-import cf.pies.replay.type.EntityType;
 import cf.pies.replay.type.EntityMetadata;
+import cf.pies.replay.type.EntityType;
 import cf.pies.replay.type.serialize.Vec3fOrigin;
 import io.netty.util.collection.IntObjectHashMap;
 import io.netty.util.collection.IntObjectMap;
@@ -12,10 +12,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class is designed for recording replays only.
@@ -24,7 +21,14 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 public class ReplaySession {
+    @Getter
     private final ReplayTime time;
+
+    /**
+     * Primarily used for internal saving methods, use if you are making a saver, if not do not.
+     * The ReplayBuffer should not be needed for any other reasons.
+     */
+    @Getter
     private final ReplayBuffer buffer;
 
     /**
@@ -43,6 +47,10 @@ public class ReplaySession {
      * Metadata for entities in replay.
      */
     private final IntObjectMap<EntityMetadata> entities = new IntObjectHashMap<>();
+
+    public EntityMetadata[] getEntities() {
+        return entities.values(EntityMetadata.class);
+    }
 
     /**
      * A map of actual entity id -> replay entity id.
@@ -68,14 +76,14 @@ public class ReplaySession {
      */
     public void start() throws Exception {
         time.start();
-        buffer.begin();
+        buffer.getWriter().begin();
         active = true;
     }
 
     public void end() {
         finishTick();
         time.end();
-        buffer.end();
+        buffer.getWriter().end();
         active = false;
     }
 
@@ -95,7 +103,7 @@ public class ReplaySession {
         // If there is no recordables, there is no point saving to the buffer or updating the array list.
         if (!currentTickRecordables.isEmpty()) {
             // Move the old tick into the completed buffer
-            buffer.submit(currentTick, currentTickRecordables);
+            buffer.getWriter().submit(currentTick, currentTickRecordables);
 
             // Create new array for current tick
             currentTickRecordables = new ArrayList<>();

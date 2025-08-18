@@ -6,6 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class EntityMetadata {
-    private final int id;
+    private final int recId;
     private final EntityType type;
 }

@@ -71,3 +71,8 @@ The origin is a location that all other locations in the replay are relative to
 Example: Player spawn (for 1 player), map center (for multiplayer) or just a random location
 
 Why? When playing the replay back the origin is needed so your playback in another location
+
+# Unsigned vs Signed VarInt
+Signed VarInts (writeVarInt) are designed so the compression accounts for negative numbers, however it can slightly effect positive numbers making the size larger.
+
+Unsigned VarInts (writeUnsignedVarInt) still work will negative numbers, however it will be very large in file size

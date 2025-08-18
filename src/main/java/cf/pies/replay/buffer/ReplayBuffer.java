@@ -1,7 +1,13 @@
 package cf.pies.replay.buffer;
 
 import cf.pies.replay.recordable.Recordable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+import javax.annotation.Nullable;
+import javax.management.ReflectionException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -30,6 +36,17 @@ public interface ReplayBuffer {
         void end();
     }
 
+    /**
+     * Represents a frame in the replay.
+     * When reading back the structure isn't very defined, so a tick is needed.
+     */
+    @Getter
+    @RequiredArgsConstructor
+    class BufferFrame {
+        private final int tick;
+        private final List<Recordable> recordables;
+    }
+
     interface Reader {
         /**
          * Called when the replay has started.
@@ -39,8 +56,10 @@ public interface ReplayBuffer {
 
         /**
          * Reads one tick from the buffer
+         * @return Returns null if there is no more data
          */
-        List<Recordable> readNextTick();
+        @Nullable
+        BufferFrame readNextTick() throws Exception;
 
         /**
          * Ends the buffer.

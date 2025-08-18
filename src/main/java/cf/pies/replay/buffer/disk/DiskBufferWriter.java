@@ -38,13 +38,13 @@ public class DiskBufferWriter implements ReplayBuffer.Writer {
         try {
             System.out.println(tick + " submitted " + recordables.size());
             // tick
-            stream.writeVarInt(tick);
+            stream.writeUnsignedVarInt(tick);
 
             // list size
-            stream.writeVarInt(recordables.size());
+            stream.writeUnsignedVarInt(recordables.size());
             for (Recordable recordable : recordables) {
                 // recordable id
-                stream.writeVarInt(store.getIdByRecordable(recordable.getClass()));
+                stream.writeUnsignedVarInt(store.getIdByRecordable(recordable.getClass()));
 
                 // recordable data
                 recordable.write(stream);

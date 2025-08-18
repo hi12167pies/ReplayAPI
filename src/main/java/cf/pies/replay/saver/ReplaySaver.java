@@ -1,7 +1,7 @@
 package cf.pies.replay.saver;
 
-import cf.pies.replay.recording.ReplaySession;
-
+/**
+ * Save a replay session to an external source.
+ */
 public interface ReplaySaver {
-    void save(ReplaySession session);
 }
