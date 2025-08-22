@@ -7,5 +7,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EntityMetadata {
     private final int recId;
+    private final String name;
     private final EntityType type;
 }

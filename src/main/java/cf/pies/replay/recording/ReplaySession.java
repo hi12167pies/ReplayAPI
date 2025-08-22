@@ -124,7 +124,12 @@ public class ReplaySession {
             throw new IllegalArgumentException("Entity type does not match supplied entity");
         }
 
-        entities.put(recId, new EntityMetadata(recId, type));
+        addEntity(entity, new EntityMetadata(recId, entity.getName(), type));
+    }
+
+    public void addEntity(Entity entity, EntityMetadata metadata) {
+        int recId = metadata.getRecId();
+        entities.put(recId, metadata);
         recordingEntityIds.put(entity.getEntityId(), recId);
     }
 

@@ -41,14 +41,7 @@ public class DiskBufferWriter implements ReplayBuffer.Writer {
             stream.writeUnsignedVarInt(tick);
 
             // list size
-            stream.writeUnsignedVarInt(recordables.size());
-            for (Recordable recordable : recordables) {
-                // recordable id
-                stream.writeUnsignedVarInt(store.getIdByRecordable(recordable.getClass()));
 
-                // recordable data
-                recordable.write(stream);
-            }
         } catch (IOException err) {
             err.printStackTrace(System.out);
         }
